@@ -3,7 +3,7 @@
 #include "Game.hpp"
 
 void Unit::move(const sf::Vector2f delta) {
-    sprite->move(delta);
+    sprite->move(delta, this->speed);
 }
 
 sf::Sprite& Unit::get_sprite() {
@@ -12,4 +12,8 @@ sf::Sprite& Unit::get_sprite() {
 
 void Unit::set_game_ptr(Game* ptr) {
     game_ptr = ptr;
+}
+
+void Unit::set_speed(float speed) {
+    this->speed = speed;
 }

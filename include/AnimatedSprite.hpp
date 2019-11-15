@@ -9,6 +9,6 @@ private:
     sf::Sprite* sprite;
 public:
     AnimatedSprite(sf::Sprite* sprite, const AnimatedSpriteConfig* config);
-    void move(const sf::Vector2f delta);
+    void move(const sf::Vector2f delta, float speed);
     sf::Sprite& get_sprite();
 };

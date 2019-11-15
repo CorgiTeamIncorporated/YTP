@@ -9,7 +9,7 @@ AnimatedSprite::AnimatedSprite(sf::Sprite* sprite, const AnimatedSpriteConfig* c
     this->sprite->setTextureRect(config->down_moves.at(0));
 }
 
-void AnimatedSprite::move(const sf::Vector2f delta) {
+void AnimatedSprite::move(const sf::Vector2f delta, float speed = 1) {
     if (delta == last_direct) {
         frame_num = (frame_num + 1) % config->move_frames_count;
     } else {
@@ -17,7 +17,7 @@ void AnimatedSprite::move(const sf::Vector2f delta) {
         frame_num = 0;
     }
 
-    sprite->move(delta); 
+    sprite->move(delta * speed); 
 
     if (delta == Directions::Left) {
         sprite->setTextureRect(config->left_moves.at(frame_num));

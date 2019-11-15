@@ -32,6 +32,7 @@ int main() {
 
     AnimatedSprite* player_animated_sprite = new AnimatedSprite(player_sprite, &PlayerConfig);
     Unit* player = new Unit(player_animated_sprite);
+    player->set_speed(10.0);
 
     sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1000, 1000), "Test window");
 
