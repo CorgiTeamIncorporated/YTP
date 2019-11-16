@@ -15,4 +15,5 @@ public:
       };
 
    void tick(); void loop();
+   void draw_background();
 };

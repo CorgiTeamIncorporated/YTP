@@ -2,8 +2,9 @@
 #include "Unit.hpp"
 #include "Game.hpp"
 
-void Unit::move(const sf::Vector2f delta) {
-    sprite->move(delta, this->speed);
+void Unit::move() {
+    if (direction != Directions::NullDirection)
+        sprite->move(direction, speed);
 }
 
 sf::Sprite& Unit::get_sprite() {
