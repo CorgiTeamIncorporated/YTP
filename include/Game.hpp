@@ -16,4 +16,7 @@ public:
 
    void tick(); void loop();
    void draw_background();
+   void complete_drawing();
+
+   friend class Unit;
 };
