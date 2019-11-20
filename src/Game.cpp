@@ -1,11 +1,16 @@
 #include "Directions.hpp"
 #include "Unit.hpp"
 #include "Game.hpp"
+#include "debug.hpp"
 
 void Game::draw_background() {
     for (const auto& v: current_room->map) {
         for (auto* object: v) {
-            window->draw(object->sprite);
+            window->draw(object->background);
+
+            if (object->solid_height != 0) {
+                window->draw(object->solid_part);
+            }
         }
     }
 }
@@ -43,6 +48,18 @@ void Game::tick() {
     }
 }
 
+void Game::complete_drawing() {
+    // Draws the upper parts of solid blocks
+
+    for (const auto& v: current_room->map) {
+        for (auto* object: v) {
+            if (object->solid_height != 0) {
+                window->draw(object->upper_part);
+            }
+        }
+    }
+}
+
 void Game::loop() {
     while (window->isOpen()) {
         window->clear();
@@ -50,6 +67,7 @@ void Game::loop() {
         tick();
         player->move();
         window->draw(player->get_sprite());
+        complete_drawing();
         window->display();
     }
 }
