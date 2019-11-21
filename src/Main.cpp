@@ -1,19 +1,21 @@
-#include <cstdlib>
 #include <exception>
 #include "Game.hpp"
 #include "Main.hpp"
 
+// See: Main.hpp.
 int main(int argc, char** argv)
 {
+    // Create a new game instance.
     YDC::Game game;
+
     try
     {
-        game.handleInitialization();
-        return EXIT_SUCCESS;
+        // Initialize the game.
+        return game.handleInitialization();
     }
     catch (const std::exception& exception)
     {
-        game.handleException(exception);
-        return EXIT_FAILURE;
+        // Handle the exception.
+        return game.handleException(exception);
     }
 }

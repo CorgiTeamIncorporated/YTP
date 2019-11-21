@@ -6,6 +6,7 @@
 #include "../Content.hpp"
 #include "../Scene.hpp"
 
+// See: Config.hpp.
 namespace YDC
 {
     /// A load screen, the first thing a user sees.
@@ -20,13 +21,18 @@ namespace YDC
         /// Destructs the load screen instance.
         ~LoadScreen();
 
-        /// Loads the game in the separate thread.
-        void loadGame();
+        /// Changes the scene to the main menu.
+        ///
+        /// @param window The window handler.
+        void changeToMainMenu(sf::RenderWindow& window);
 
         /// Shows the load screen.
         ///
         /// @param window The window handler.
-        void run(sf::RenderWindow& window);
+        void checkThread(sf::RenderWindow& window);
+
+        /// Loads the game in the separate thread.
+        void loadGame();
 
     private:
         /// Whether the game is loaded.
@@ -35,6 +41,6 @@ namespace YDC
         /// The game load thread.
         std::thread thread_;
     };
-} // YDC
+}
 
 #endif // YDC_SCENES_LOADSCREEN_HPP_

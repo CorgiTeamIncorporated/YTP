@@ -5,6 +5,7 @@
 #include "../Animation.hpp"
 #include "../Object.hpp"
 
+// See: Config.hpp.
 namespace YDC
 {
     /// Fade-in and fade-out animations.
@@ -40,29 +41,23 @@ namespace YDC
 
         /// Draws the sprite/shape animated.
         ///
-        /// @param window The window to render the sprite/shape in.
+        /// @param window The window handler.
         void drawObject(sf::RenderWindow& window);
 
         /// Gets whether the animation is done.
         ///
         /// @return Whether the animation is done.
-        bool getIsDone() const;
+        bool getDone() const;
 
         /// Resets the style of the animated object.
         void resetObject();
 
     private:
-        /// The current alpha color value.
-        sf::Uint8 currentAlpha = 0;
-
         /// The end aplha color value.
         const sf::Uint8 endAlpha_ = 255;
 
         /// The start alpha color value.
         const sf::Uint8 startAlpha_ = 0;
-
-        /// The time require to finish the animation.
-        sf::Time time_ = sf::seconds(2);
 
         /// Gets the current alpha value to draw.
         ///
@@ -74,6 +69,6 @@ namespace YDC
         /// @return The alpha value with error.
         sf::Int16 getCurrentAlphaWithError() const;
     };
-} // YDC
+}
 
 #endif // YDC_ANIMATIONS_FADE_HPP_

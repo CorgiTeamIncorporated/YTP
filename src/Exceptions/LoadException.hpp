@@ -4,23 +4,24 @@
 #include <stdexcept>
 #include <SFML/System.hpp>
 
+// See: Config.hpp.
 namespace YDC
 {
     /// A content loading exception.
     class LoadException : public std::runtime_error
     {
     public:
-        /// Constructs an exception with no content path.
+        /// Constructs a new exception instance with no content path.
         LoadException();
 
-        /// Constructs an exception with the content path.
+        /// Constructs a new exception instance with the content path.
         ///
         /// @param path The path to the content.
         LoadException(const sf::String& path);
 
-        /// Destructs the exception.
+        /// Destructs the exception instance.
         ~LoadException() noexcept;
     };
-} // YDC
+}
 
 #endif // YDC_EXCEPTIONS_LOADEXCEPTION_HPP_

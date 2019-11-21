@@ -1,8 +1,10 @@
 #ifndef YDC_SCENE_HPP_
 #define YDC_SCENE_HPP_
 
+#include <map>
 #include <SFML/Graphics.hpp>
 
+// See: Config.hpp.
 namespace YDC
 {
     /// Forward declare a game content.
@@ -23,15 +25,24 @@ namespace YDC
         /// Runs the scene action.
         ///
         /// @param window The window handler.
-        virtual void run(sf::RenderWindow& window) = 0;
+        void run(sf::RenderWindow& window);
 
     protected:
+        /// The current act type definition.
+        typedef void (Scene::*Act)(sf::RenderWindow& window);
+
         /// The game content reference.
         Content& content_;
 
-        /// The state function name.
-        sf::String state_ = "Initial";
+        /// Sets the current act.
+        ///
+        /// @param pointer The pointer to the act.
+        void setCurrentAct(Act pointer);
+
+    private:
+        /// The current act of the scene.
+        Act currentAct_;
     };
-} // YGC
+}
 
 #endif // YDC_SCENE_HPP_

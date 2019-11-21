@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "Scene.hpp"
 
+// See: Config.hpp.
 namespace YDC
 {
     /// Game content (audio, fonts, sprites, etc).
@@ -41,6 +42,12 @@ namespace YDC
         /// @param path The path to the texture.
         void addTexture(const sf::String& name, const sf::String& path);
 
+        /// Loads and adds a new texture and a new sprite connected to it.
+        ///
+        /// @param name The unique name of the texture and the sprite, is used to call them.
+        /// @param path The path to the texture.
+        void addTextureAndSprite(const sf::String& name, const sf::String& path);
+
         /// Gets the current scene.
         ///
         /// @return scene The current scene.
@@ -55,10 +62,12 @@ namespace YDC
 
         /// Gets the copy of the font.
         ///
+        /// @note This instance is not auto deleted. Remember to delete it.
+        ///
         /// @param name The name of the font.
         ///
         /// @return The font copy.
-        sf::Font getFontCopy(const sf::String& name);
+        sf::Font getFontCopy(const sf::String& name) const;
 
         /// Gets the pointer to the scene.
         ///
@@ -76,10 +85,12 @@ namespace YDC
 
         /// Gets the copy of the sprite.
         ///
+        /// @note This instance is not auto deleted. Remember to delete it.
+        ///
         /// @param name The name of the sprite.
         ///
         /// @return The sprite copy.
-        sf::Sprite getSpriteCopy(const sf::String& name);
+        sf::Sprite getSpriteCopy(const sf::String& name) const;
 
         /// Gets the pointer to the texture.
         ///
@@ -90,10 +101,12 @@ namespace YDC
 
         /// Gets the copy of the texture.
         ///
+        /// @note This instance is not auto deleted. Remember to delete it.
+        ///
         /// @param name The name of the texture.
         ///
         /// @return The texture copy.
-        sf::Texture getTextureCopy(const sf::String& name);
+        sf::Texture getTextureCopy(const sf::String& name) const;
 
         /// Sets the current scene.
         ///
@@ -133,6 +146,6 @@ namespace YDC
         /// Deletes all the textures.
         void deleteTextures();
     };
-} // YDC
+}
 
 #endif // YDC_CONTENT_HPP_

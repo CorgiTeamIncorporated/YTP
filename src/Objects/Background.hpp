@@ -5,6 +5,7 @@
 #include "../Content.hpp"
 #include "../Object.hpp"
 
+// See: Config.hpp.
 namespace YDC
 {
     /// A background for something.
@@ -34,6 +35,6 @@ namespace YDC
         /// The sprite copy.
         sf::Sprite sprite_;
     };
-} // YDC
+}
 
 #endif // YDC_OBJECTS_BACKGROUND_HPP_

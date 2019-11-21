@@ -5,6 +5,7 @@
 #include "../Content.hpp"
 #include "../Object.hpp"
 
+// See: Config.hpp.
 namespace YDC
 {
     /// A button for something.
@@ -18,6 +19,12 @@ namespace YDC
         /// @param text The text of the button.
         Button(Content& content, const sf::String& spriteName, sf::Text& text);
 
+        /// Constructs a new button instance.
+        ///
+        /// @param content The game content.
+        /// @param text The text of the button.
+        Button(Content& content, sf::Text& text);
+
         /// Destructs the button instance.
         ~Button();
 
@@ -26,26 +33,31 @@ namespace YDC
         /// @param window The window handler.
         void draw(sf::RenderWindow& window);
 
+        /// Gets whether the button is clicked.
+        ///
+        /// @return Whether a button is clicked.
+        bool getClicked();
+
         /// Sets the alpha color value of the button.
         ///
         /// @param alpha The alpha color value.
         void setAlpha(const sf::Uint8& alpha);
 
     private:
-        /// The button position.
-        sf::Vector2u position_ = sf::Vector2u(0, 0);
+        /// Whether the button is clicked.
+        bool clicked_ = false;
 
-        /// The button size.
-        sf::Vector2u size_;
+        /// Whether the button is hovered.
+        bool hovered_ = false;
 
         /// The sprite copy.
         sf::Sprite sprite_;
 
+        /// The button size.
+        sf::Vector2f size_;
+
         /// The button text.
         sf::Text text_;
-
-        /// Centers the text according to the button parameters.
-        void centerText();
 
         /// Checks whether the button is clicked.
         ///
@@ -66,7 +78,18 @@ namespace YDC
         ///
         /// @param window The window handler.
         bool isHoveredY(sf::RenderWindow& window);
+
+        /// Sets the sprite position. Doesn't affect the text position.
+        void setSpritePosition();
+
+        /// Sets the proper sprite rectangle, according to the state.
+        ///
+        /// @param window The window handler.
+        void setSpriteRectangle(sf::RenderWindow& window);
+
+        /// Sets the text position and centers it according to the button size.
+        void setTextPosition();
     };
-} // YDC
+}
 
 #endif // YDC_OBJECTS_BUTTON_HPP_

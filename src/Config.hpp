@@ -6,34 +6,50 @@
 /// The game namespace (YDC = Young Dungeon Creatures).
 namespace YDC
 {
-    /// Game basic configuration.
-    class Config
-    {
-    public:
-        /// The default, non-translated application name.
-        static const sf::String APP_NAME;
+    /// The default, non-translated application name.
+    const sf::String APP_NAME = "Young Dungeon Creatures";
 
-        /// The directory with the assets.
-        static const sf::String ASSETS_DIR;
+    /// The directory with the assets.
+    const sf::String ASSETS_DIR = "assets";
 
-        /// The directory with the fonts.
-        static const sf::String FONTS_DIR;
+    /// The directory with the fonts.
+    const sf::String FONTS_DIR = ASSETS_DIR + "/Fonts";
 
-        /// The directory with the images.
-        static const sf::String IMAGES_DIR;
+    /// The directory with the images.
+    const sf::String IMAGES_DIR = ASSETS_DIR + "/Images";
 
-        /// The minimal window height.
-        static const sf::Uint16 MIN_HEIGHT;
+    /// The generic entity height.
+    const sf::Uint16 ENTITY_HEIGHT = 64;
 
-        /// The minimal window width.
-        static const sf::Uint16 MIN_WIDTH;
+    /// The generic entity step.
+    const sf::Uint16 ENTITY_STEP = 15;
 
-        /// The initial window height.
-        static const sf::Uint16 WIN_HEIGHT;
+    // The amount of animation steps.
+    const sf::Uint8 ENTITY_STEPS = 4;
 
-        /// The initial window width.
-        static const sf::Uint16 WIN_WIDTH;
-    };
-} // YDC
+    /// The generic entity width.
+    const sf::Uint16 ENTITY_WIDTH = 43;
+
+    /// The tile field height.
+    const sf::Uint16 FIELD_HEIGHT = 16;
+
+    /// The tile field width.
+    const sf::Uint16 FIELD_WIDTH = 16;
+
+    /// The minimal window height.
+    const sf::Uint16 MIN_HEIGHT = 250;
+
+    /// The minimal window width.
+    const sf::Uint16 MIN_WIDTH = 250;
+
+    /// The tile size.
+    const sf::Uint16 TILE_SIZE = 64;
+
+    /// The initial window height.
+    const sf::Uint16 WIN_HEIGHT = 600;
+
+    /// The initial window width.
+    const sf::Uint16 WIN_WIDTH = 800;
+}
 
 #endif // YDC_CONFIG_HPP_
