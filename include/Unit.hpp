@@ -8,13 +8,14 @@ class Unit {
 protected:
     unsigned short solid_height;
     AnimatedSprite* sprite;
+    sf::Clock* clock;
     Game* game_ptr;
     float speed;
 public:
     sf::Vector2f direction;
   
     Unit(AnimatedSprite* sprite, Game* game = nullptr):
-      sprite(sprite), game_ptr(game) {};
+      sprite(sprite), game_ptr(game), clock(new sf::Clock) {};
 
     void move();
 

@@ -5,15 +5,16 @@
 
 void Unit::move() {
     // Testing for player not to be stucked with some solid object
+    sf::Time delta_time = clock->restart();
     sf::FloatRect bounds = sprite->get_sprite().getGlobalBounds();
 
     bounds.top += solid_height;
     bounds.height -= solid_height;
 
-    bounds.left += direction.x * speed;
-    bounds.top += direction.y * speed;
+    bounds.left += direction.x * speed * delta_time.asMilliseconds();
+    bounds.top += direction.y * speed * delta_time.asMilliseconds();
 
-    unsigned short block_size = 100; // Change to actual tile size
+    unsigned short block_size = 100; // TODO: Change to actual tile size
 
     unsigned short left = bounds.left / block_size;
     unsigned short right = (bounds.left + bounds.width) / block_size;
@@ -27,7 +28,7 @@ void Unit::move() {
 
             if (object->solid_height != 0) {
                 if (object->solid_part.getGlobalBounds().intersects(bounds)) {
-                    return;
+                    return; // TODO: move player in opposite direction until intersects
                 }
             }
         }

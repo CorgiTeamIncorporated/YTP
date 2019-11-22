@@ -6,17 +6,17 @@ CXX=$(GCC_FOLDER)\bin\g++.exe
 LIB_DIR=$(GCC_FOLDER)\lib
 HEADER_DIR=$(GCC_FOLDER)\include
 
-all: Game.o Unit.o AnimatedSprite.o
-	$(CXX) main.cpp Game.o AnimatedSprite.o Unit.o -I $(HEADER_DIR) -I "include" -L $(LIB_DIR) $(LIBS) -o main.exe
+all: Game.o Unit.o AnimatedSprite.o MapObject.o
+	$(CXX) main.cpp $^ -I $(HEADER_DIR) -I "include" -L $(LIB_DIR) $(LIBS) -o main.exe
 
-Game.o: src/Game.cpp include/Game.hpp
-	$(CXX) -c src/Game.cpp -I $(HEADER_DIR) -I "include" -L $(LIB_DIR) $(LIBS) -o Game.o
+debug: Game-debug.o Unit-debug.o AnimatedSprite-debug.o MapObject-debug.o
+	$(CXX) -g main.cpp $^ -I $(HEADER_DIR) -I "include" -L $(LIB_DIR) $(LIBS) -o main-debug.exe
 
-Unit.o: src/Unit.cpp include/Unit.hpp
-	$(CXX) -c src/Unit.cpp -I $(HEADER_DIR) -I "include" -L $(LIB_DIR) $(LIBS) -o Unit.o
+%-debug.o: src/%.cpp include/%.hpp
+	$(CXX) -g -c $< -I $(HEADER_DIR) -I "include" -L $(LIB_DIR) $(LIBS) -o $@
 
-AnimatedSprite.o: src/AnimatedSprite.cpp include/AnimatedSprite.hpp
-	$(CXX) -c src/AnimatedSprite.cpp -I $(HEADER_DIR) -I "include" -L $(LIB_DIR) $(LIBS) -o AnimatedSprite.o
+%.o: src/%.cpp include/%.hpp
+	$(CXX) -c $< -I $(HEADER_DIR) -I "include" -L $(LIB_DIR) $(LIBS) -o $@
 
 clean:
 	del *.o
