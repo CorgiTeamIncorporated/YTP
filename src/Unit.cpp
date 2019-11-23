@@ -6,6 +6,7 @@
 void Unit::move() {
     // Testing for player not to be stucked with some solid object
     sf::Time delta_time = clock->restart();
+    std::cout << delta_time.asMilliseconds() << std::endl;
     sf::FloatRect bounds = sprite->get_sprite().getGlobalBounds();
 
     bounds.top += solid_height;
@@ -35,7 +36,7 @@ void Unit::move() {
     }
 
     if (direction != Directions::NullDirection)
-        sprite->move(direction, speed);
+        sprite->move(direction, speed*delta_time.asMilliseconds());
 }
 
 sf::Sprite& Unit::get_sprite() {
@@ -52,4 +53,12 @@ void Unit::set_speed(float speed) {
 
 void Unit::set_solid_height(unsigned short height) {
     solid_height = height;
+}
+
+unsigned short Unit::get_position_x(){
+    return sprite->get_sprite().getGlobalBounds().left;
+}
+
+unsigned short Unit::get_position_y(){
+    return sprite->get_sprite().getGlobalBounds().top;
 }

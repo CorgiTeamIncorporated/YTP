@@ -61,13 +61,18 @@ void Game::complete_drawing() {
 }
 
 void Game::loop() {
+    view.setCenter(player->get_position_x(), player->get_position_y());
+    window->setView(view);
     while (window->isOpen()) {
+        sf::sleep(sf::milliseconds(0));
         window->clear();
         draw_background();
         tick();
         player->move();
         window->draw(player->get_sprite());
         complete_drawing();
+        view.setCenter(player->get_position_x(), player->get_position_y());
+        window->setView(view);
         window->display();
     }
 }

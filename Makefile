@@ -1,4 +1,4 @@
-GCC_FOLDER=C:\Users\exp101t\Downloads\x86_64-7.3.0-release-posix-seh-rt_v5-rev0\mingw64
+GCC_FOLDER=D:\Soft\MinGW\mingw64
 
 LIBS=-lsfml-graphics -lsfml-window -lsfml-system
 

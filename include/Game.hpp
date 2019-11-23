@@ -6,6 +6,7 @@ class Unit;
 class Game {
 private:
     sf::RenderWindow* window;
+    sf::View view;
     GameRoom* current_room;
     Unit* player;
 public:
