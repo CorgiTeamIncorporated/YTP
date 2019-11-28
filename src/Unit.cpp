@@ -1,11 +1,11 @@
 #include "Directions.hpp"
 #include "Unit.hpp"
-#include "Game.hpp"
-#include "debug.hpp"
+// #include "Game.hpp"
+#include "Scenes/Dungeon.hpp"
+// #include "debug.hpp"
 
-void Unit::move() {
+void Unit::move(sf::Time delta_time) {
     // Testing for player not to be stucked with some solid object
-    sf::Time delta_time = clock->restart();
     sf::FloatRect bounds = sprite->get_sprite().getGlobalBounds();
 
     bounds.top += solid_height;
@@ -24,7 +24,7 @@ void Unit::move() {
 
     for (int i = left; i <= right; ++i) {
         for (int j = up; j <= down; ++j) {
-            MapObject* object = game_ptr->current_room->map[i][j];
+            MapObject* object = dungeon_ptr->current_room->map[i][j];
 
             if (object->solid_height != 0) {
                 if (object->solid_part.getGlobalBounds().intersects(bounds)) {
@@ -35,15 +35,11 @@ void Unit::move() {
     }
 
     if (direction != Directions::NullDirection)
-        sprite->move(direction, speed);
+        sprite->move(direction, speed, delta_time);
 }
 
 sf::Sprite& Unit::get_sprite() {
     return sprite->get_sprite();
-}
-
-void Unit::set_game_ptr(Game* ptr) {
-    game_ptr = ptr;
 }
 
 void Unit::set_speed(float speed) {

@@ -17,3 +17,8 @@ std::ostream& operator<<(std::ostream& stream, sf::Vector2<T> vector) {
 
     return stream;
 }
+
+std::ostream& operator<<(std::ostream& stream, sf::Time time) {
+    stream << "Time(" << time.asMilliseconds() << ");";
+    return stream;
+}
