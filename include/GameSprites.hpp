@@ -3,7 +3,7 @@
 
 namespace GameSprites {
     // namespace Dungeon {
-        sf::Sprite Grass, Stone, Player, Spikes;
+        sf::Sprite Grass, Stone, Player, Spikes, Zombie;
     // };
 
     void init_sprites() {
@@ -13,5 +13,6 @@ namespace GameSprites {
         /*Dungeon::*/Stone.setTexture(GameTextures::/*Dungeon::*/Stone);
         /*Dungeon::*/Player.setTexture(GameTextures::/*Dungeon::*/Player);
         /*Dungeon::*/Spikes.setTexture(GameTextures::/*Dungeon::*/Spikes);
+        /*Dungeon::*/Zombie.setTexture(GameTextures::/*Dungeon::*/Zombie);
     };
 };

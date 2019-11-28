@@ -1,6 +1,5 @@
 #include "Directions.hpp"
 #include "Unit.hpp"
-// #include "Game.hpp"
 #include "Scenes/Dungeon.hpp"
 // #include "debug.hpp"
 
@@ -14,7 +13,7 @@ void Unit::move(sf::Time delta_time) {
     bounds.left += direction.x * speed * delta_time.asMilliseconds();
     bounds.top += direction.y * speed * delta_time.asMilliseconds();
 
-    unsigned short block_size = 100; // TODO: Change to actual tile size
+    unsigned short block_size = dungeon_ptr->tile_size;
 
     unsigned short left = bounds.left / block_size;
     unsigned short right = (bounds.left + bounds.width) / block_size;

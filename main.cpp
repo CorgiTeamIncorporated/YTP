@@ -3,6 +3,7 @@
 #include "GameRoom.hpp"
 #include "GameSprites.hpp"
 #include "GameManager.hpp"
+#include "Enemies/Zombie.hpp"
 #include <vector>
 
 int main() {
@@ -27,6 +28,9 @@ int main() {
         }
     }
 
+    AnimatedSprite* zombie_sprite = new AnimatedSprite(&GameSprites::Zombie, &ZombieConfig);
+    Zombie* zombie = new Zombie(zombie_sprite);
+
     AnimatedSprite* player_sprite = new AnimatedSprite(&GameSprites::/*Dungeon::*/Player, &SkeletonConfig);
     Unit* player = new Unit(player_sprite);
 
@@ -38,6 +42,13 @@ int main() {
     Dungeon* dungeon = new Dungeon;
     dungeon->set_player(player);
     dungeon->set_room(room);
+    dungeon->set_tile_size(100);
+
+    room->dungeon_ptr = dungeon;
+    room->add_enemy(zombie);
+
+    zombie->set_speed(0.1);
+    zombie->set_solid_height(32);
 
     GameManager* manager = new GameManager(dungeon, window);
     manager->start();

@@ -1,4 +1,3 @@
-#include "Scenes/AbstractScene.hpp"
 #include "Scenes/Dungeon.hpp"
 #pragma once
 

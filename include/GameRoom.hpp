@@ -10,5 +10,9 @@ struct GameRoom {
     GameRoom* left; GameRoom* right;
     GameRoom* up; GameRoom* down;
 
+    Dungeon* dungeon_ptr;
+
     unsigned short block_size;
+
+    void add_enemy(AbstractEnemy* enemy);
 };

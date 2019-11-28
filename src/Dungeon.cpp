@@ -1,5 +1,5 @@
 #include "Scenes/Dungeon.hpp"
-#include "Unit.hpp"
+// #include "Unit.hpp"
 // #include "GameSprites.hpp"
 
 void Dungeon::render(sf::RenderWindow& window) {
@@ -16,6 +16,9 @@ void Dungeon::render(sf::RenderWindow& window) {
 
     // Drawing the player
     window.draw(player->get_sprite());
+
+    for (AbstractEnemy* enemy: current_room->enemies)
+        window.draw(enemy->get_sprite());
 
     // Drawing upperground
     for (const auto& v: current_room->map) {
@@ -40,6 +43,9 @@ void Dungeon::update(sf::RenderWindow& window) {
             handle_event(event);
 
     player->move(delta);
+
+    for (AbstractEnemy* enemy: current_room->enemies)
+        enemy->ai_move(delta);
 }
 
 void Dungeon::handle_event(sf::Event event) {
@@ -80,4 +86,8 @@ void Dungeon::set_room(GameRoom* room) {
 
 void Dungeon::preload() {
     return;
+}
+
+void Dungeon::set_tile_size(unsigned int size) {
+    this->tile_size = size;
 }
