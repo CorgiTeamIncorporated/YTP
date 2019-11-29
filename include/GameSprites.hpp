@@ -2,17 +2,16 @@
 #pragma once
 
 namespace GameSprites {
-    // namespace Dungeon {
-        sf::Sprite Grass, Stone, Player, Spikes, Zombie;
-    // };
+    sf::Sprite Grass, Stone, Player, Spikes, Zombie, Wall;
 
     void init_sprites() {
         GameTextures::init_textures();
 
-        /*Dungeon::*/Grass.setTexture(GameTextures::/*Dungeon::*/Grass);
-        /*Dungeon::*/Stone.setTexture(GameTextures::/*Dungeon::*/Stone);
-        /*Dungeon::*/Player.setTexture(GameTextures::/*Dungeon::*/Player);
-        /*Dungeon::*/Spikes.setTexture(GameTextures::/*Dungeon::*/Spikes);
-        /*Dungeon::*/Zombie.setTexture(GameTextures::/*Dungeon::*/Zombie);
+        Grass.setTexture(GameTextures::Grass);
+        Stone.setTexture(GameTextures::Stone);
+        Player.setTexture(GameTextures::Player);
+        Spikes.setTexture(GameTextures::Spikes);
+        Zombie.setTexture(GameTextures::Zombie);
+        Wall.setTexture(GameTextures::Wall);
     };
 };

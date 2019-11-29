@@ -2,15 +2,14 @@
 #pragma once
 
 namespace GameTextures {
-    // namespace Dungeon {
-        sf::Texture Grass, Stone, Player, Spikes, Zombie;
-    // }
+    sf::Texture Grass, Stone, Player, Spikes, Zombie, Wall;
 
     void init_textures() {
-        /*Dungeon::*/Grass.loadFromFile("textures/grass1.png");
-        /*Dungeon::*/Stone.loadFromFile("textures/rock.png");
-        /*Dungeon::*/Player.loadFromFile("textures/skeleton-down-steps.png");
-        /*Dungeon::*/Spikes.loadFromFile("textures/thorns2.png");
-        /*Dungeon::*/Zombie.loadFromFile("textures/zombie.png");
+        Grass.loadFromFile("textures/grass1.png");
+        Stone.loadFromFile("textures/rock.png");
+        Player.loadFromFile("textures/skeleton-down-steps.png");
+        Spikes.loadFromFile("textures/thorns2.png");
+        Zombie.loadFromFile("textures/zombie.png");
+        Wall.loadFromFile("textures/wall.png");
     };
 };

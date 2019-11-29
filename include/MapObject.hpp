@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-// #include "debug.hpp"
 #pragma once
 
 struct MapObject {

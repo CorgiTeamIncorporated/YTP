@@ -1,6 +1,4 @@
 #include "Scenes/Dungeon.hpp"
-// #include "Unit.hpp"
-// #include "GameSprites.hpp"
 
 void Dungeon::render(sf::RenderWindow& window) {
     // Drawing background
@@ -17,6 +15,7 @@ void Dungeon::render(sf::RenderWindow& window) {
     // Drawing the player
     window.draw(player->get_sprite());
 
+    // Drawing the enemies
     for (AbstractEnemy* enemy: current_room->enemies)
         window.draw(enemy->get_sprite());
 
