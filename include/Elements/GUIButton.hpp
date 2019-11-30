@@ -1,14 +1,14 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Object.hpp"
+#include "GUIObject.hpp"
 
-class Button : public Object
+class GUIButton: public GUIObject
 {
 public:
-    Button(const sf::Sprite& sprite, sf::Text& text);
-    Button(sf::Text& text);
-    ~Button();
+    GUIButton(const sf::Sprite& sprite, sf::Text& text);
+    GUIButton(sf::Text& text);
+    ~GUIButton();
     void draw(sf::RenderWindow& window);
     bool getClicked();
     void setAlpha(const sf::Uint8& alpha);

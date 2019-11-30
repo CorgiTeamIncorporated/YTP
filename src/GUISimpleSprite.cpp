@@ -1,19 +1,19 @@
-#include "Elements/SimpleSprite.hpp"
+#include "Elements/GUISimpleSprite.hpp"
 
-SimpleSprite::SimpleSprite(const sf::Sprite& sprite) :
-        Object(),
+GUISimpleSprite::GUISimpleSprite(const sf::Sprite& sprite):
+        GUIObject(),
         sprite_(sprite) {
     sprite_.setOrigin(sprite_.getLocalBounds().width / 2, sprite_.getLocalBounds().height / 2);
 }
 
-SimpleSprite::~SimpleSprite() {}
+GUISimpleSprite::~GUISimpleSprite() {}
 
-void SimpleSprite::draw(sf::RenderWindow& window) {
+void GUISimpleSprite::draw(sf::RenderWindow& window) {
     sprite_.setPosition(position_ + localPosition_);
     window.draw(sprite_);
 }
 
-void SimpleSprite::setAlpha(const sf::Uint8& alpha) {
+void GUISimpleSprite::setAlpha(const sf::Uint8& alpha) {
     sf::Color color = sprite_.getColor();
     color.a = alpha;
     sprite_.setColor(color);

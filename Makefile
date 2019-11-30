@@ -7,7 +7,7 @@ CXX=$(GCC_FOLDER)\bin\g++.exe
 LIB_DIR=$(GCC_FOLDER)\lib
 HEADER_DIR=$(GCC_FOLDER)\include
 
-all: Elements/Button.o Elements/Object.o Elements/SimpleSprite.o Elements/Block.o Scenes/MainMenu.o GameFonts.o GameSprites.o GameTextures.o GameManager.o Unit.o AnimatedSprite.o MapObject.o Dungeon.o Zombie.o GameRoom.o
+all: GUIButton.o GUIObject.o GUISimpleSprite.o GUIBlock.o MainMenu.o GameFonts.o GameSprites.o GameTextures.o GameManager.o Unit.o AnimatedSprite.o MapObject.o Dungeon.o Zombie.o GameRoom.o
 	$(CXX) main.cpp $^ -I $(HEADER_DIR) -I "include" -L $(LIB_DIR) $(LIBS) -o main.exe
 
 debug: GameManager-debug.o Unit-debug.o AnimatedSprite-debug.o MapObject-debug.o Dungeon-debug.o Zombie-debug.o GameRoom-debug.o

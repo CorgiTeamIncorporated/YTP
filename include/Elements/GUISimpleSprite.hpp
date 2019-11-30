@@ -1,12 +1,12 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Object.hpp"
+#include "GUIObject.hpp"
 
-class SimpleSprite : public Object {
+class GUISimpleSprite: public GUIObject {
 public:
-    SimpleSprite(const sf::Sprite& sprite);
-    ~SimpleSprite();
+    GUISimpleSprite(const sf::Sprite& sprite);
+    ~GUISimpleSprite();
     void draw(sf::RenderWindow& window);
     void setAlpha(const sf::Uint8& alpha);
 private:

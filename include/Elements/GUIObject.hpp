@@ -2,11 +2,11 @@
 
 #include <SFML/Graphics.hpp>
 
-class Object {
+class GUIObject {
 public:
-    Object();
-    Object(const sf::Vector2f& position);
-    ~Object();
+    GUIObject();
+    GUIObject(const sf::Vector2f& position);
+    ~GUIObject();
     virtual void draw(sf::RenderWindow& window) = 0;
     virtual sf::Uint8 getInitialAlpha() const;
     virtual sf::Vector2f getInitialPosition() const;

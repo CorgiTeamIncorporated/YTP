@@ -1,15 +1,15 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "../Elements/Block.hpp"
-#include "../Elements/Button.hpp"
-#include "../Elements/SimpleSprite.hpp"
+#include "../Elements/GUIBlock.hpp"
+#include "../Elements/GUIButton.hpp"
+#include "../Elements/GUISimpleSprite.hpp"
 #include "../GameFonts.hpp"
 #include "../GameManager.hpp"
 #include "AbstractScene.hpp"
 #include "Dungeon.hpp"
 
-class MainMenu : public AbstractScene {
+class MainMenu: public AbstractScene {
 public:
     GameManager* game_manager_ptr;
     Dungeon* dungeon_ptr;
@@ -28,10 +28,10 @@ private:
     bool menu_show = false;
     sf::Clock anim_timer;
     sf::Uint16 current_alpha = 0;
-    Block block;
+    GUIBlock block;
     sf::Text startText;
     sf::Text quitText;
-    Button start;
-    Button quit;
-    SimpleSprite logo;
+    GUIButton start;
+    GUIButton quit;
+    GUISimpleSprite logo;
 };

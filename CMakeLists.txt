@@ -30,11 +30,6 @@ find_package(SFML 2.5 REQUIRED COMPONENTS
     network)
 
 add_executable(${PROJECT_NAME}
-    ${SRC_DIR}/Elements/Block.cpp
-    ${SRC_DIR}/Elements/Button.cpp
-    ${SRC_DIR}/Elements/Object.cpp
-    ${SRC_DIR}/Elements/SimpleSprite.cpp
-    ${SRC_DIR}/Scenes/MainMenu.cpp
     ${SRC_DIR}/AnimatedSprite.cpp
     ${SRC_DIR}/Dungeon.cpp
     ${SRC_DIR}/GameFonts.cpp
@@ -42,7 +37,12 @@ add_executable(${PROJECT_NAME}
     ${SRC_DIR}/GameSprites.cpp
     ${SRC_DIR}/GameTextures.cpp
     ${SRC_DIR}/GameRoom.cpp
+    ${SRC_DIR}/GUIBlock.cpp
+    ${SRC_DIR}/GUIButton.cpp
+    ${SRC_DIR}/GUIObject.cpp
+    ${SRC_DIR}/GUISimpleSprite.cpp
     ${SRC_DIR}/../main.cpp
+    ${SRC_DIR}/MainMenu.cpp
     ${SRC_DIR}/MapObject.cpp
     ${SRC_DIR}/Unit.cpp
     ${SRC_DIR}/Zombie.cpp)

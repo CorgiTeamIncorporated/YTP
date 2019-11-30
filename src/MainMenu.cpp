@@ -1,7 +1,7 @@
 #include "Scenes/MainMenu.hpp"
 #include "GameSprites.hpp"
 
-MainMenu::MainMenu() :
+MainMenu::MainMenu():
         AbstractScene(),
         block(sf::Vector2f(50, 50)),
         startText("Start the Game", GameFonts::Default),
