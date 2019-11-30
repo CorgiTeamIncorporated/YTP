@@ -36,7 +36,7 @@ void start_test_room() {
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             if (i == 0 || i == height - 1 || j == 0 || j == width - 1)
-                room->map[i][j] = new MapObject(GameSprites::Grass, GameSprites::Wall, 99);
+                room->map[i][j] = new MapObject(GameSprites::Grass, GameSprites::Wall, 100);
             else
                 room->map[i][j] = new MapObject(GameSprites::Grass, sf::Sprite());
 
