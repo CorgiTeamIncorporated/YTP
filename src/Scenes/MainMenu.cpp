@@ -1,134 +1,111 @@
-#include "../Config.hpp"
-#include "MainMenu.hpp"
+#include "Scenes/MainMenu.hpp"
+#include "GameSprites.hpp"
 
-YDC::MainMenu::MainMenu(Content& content) :
-    Scene(content),
-    background_(content, "MenuBackground"),
-    backgroundFadeIn_(background_, sf::seconds(0.3)),
-    backgroundFadeOut_(background_, sf::seconds(0.3), 255, 0),
-    block_(content, sf::Vector2f(50, 50)),
-    blockFadeIn_(block_, sf::seconds(0.3)),
-    blockFadeOut_(block_, sf::seconds(0.3), 255, 0),
-    startButtonText_("Start the Game", content.getFont("Alata")),
-    startButton_(content, startButtonText_),
-    quitButtonText_("Quit the Game", content.getFont("Alata")),
-    quitButton_(content, quitButtonText_)
-{
-    // Set the start button position.
-    startButton_.setLocalPosition(sf::Vector2f(0, -50));
-
-    // Add the start button to the block.
-    block_.addObject(&startButton_);
-
-    // Set the quit button position.
-    quitButton_.setLocalPosition(sf::Vector2f(0, 50));
-
-    // Add the quit button to the block.
-    block_.addObject(&quitButton_);
-
-    // Set the first act of the scene.
-    setCurrentAct(static_cast<Act>(&fadeInBackground));
+MainMenu::MainMenu() :
+        AbstractScene(),
+        block(sf::Vector2f(50, 50)),
+        startText("Start the Game", GameFonts::Default),
+        quitText("Quit the Game", GameFonts::Default),
+        start(startText),
+        quit(quitText),
+        logo(GameSprites::Logo) {
+    logo.setLocalPosition(sf::Vector2f(0, -100));
+    start.setLocalPosition(sf::Vector2f(0, 0));
+    quit.setLocalPosition(sf::Vector2f(0, 100));
+    block.addObject(&logo);
+    block.addObject(&start);
+    block.addObject(&quit);
 }
 
-YDC::MainMenu::~MainMenu()
-{
+void MainMenu::handle_event(sf::Event& event, sf::RenderWindow& window) {
+    if (event.type == sf::Event::Resized) {
+        window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
+    }
 }
 
-void YDC::MainMenu::fadeInBackground(sf::RenderWindow& window)
-{
-    if (backgroundFadeIn_.getDone())
-    {
-        // Reset the background fade in animation.
-        backgroundFadeIn_.resetObject();
+void MainMenu::preload() {}
 
-        // Set the button block fade in act.
-        setCurrentAct(static_cast<Act>(&fadeInButtons));
+void MainMenu::render(sf::RenderWindow& window) {
+    GameSprites::Corgi.setPosition(sf::Vector2f(window.getSize().x / 100.0f * 50, window.getSize().y / 100.0f * 50));
+    GameSprites::MenuBG.setTextureRect(sf::IntRect(0, 0, (int)window.getSize().x, (int)window.getSize().y));
 
-        // Execute the next act.
-        fadeInButtons(window);
-
-        // Return and move on to the next act.
+    if (!intro_fade_in || !intro_show) {
+        window.draw(GameSprites::Corgi);
         return;
     }
 
-    // Draw the fading in background.
-    backgroundFadeIn_.drawObject(window);
+    if (!menu_fade_in) {
+        window.draw(GameSprites::Corgi);
+        window.draw(GameSprites::MenuBG);
+        block.draw(window);
+        return;
+    }
+
+    if (!menu_show) {
+        window.draw(GameSprites::Corgi);
+        window.draw(GameSprites::MenuBG);
+        block.draw(window);
+        return;
+    }
+
+    game_manager_ptr->set_scene(dungeon_ptr);
 }
 
-void YDC::MainMenu::fadeInButtons(sf::RenderWindow& window)
-{
-    // Draw the background.
-    background_.draw(window);
+void MainMenu::update(sf::RenderWindow& window) {
+    if (!intro_started) {
+        GameSprites::Corgi.setOrigin(GameSprites::Corgi.getTexture()->getSize().x / 2, GameSprites::Corgi.getTexture()->getSize().y / 2);
+        intro_started = true;
+        anim_timer.restart();
+    }
 
-    if (blockFadeIn_.getDone())
-    {
-        // Reset the button block fade in animation.
-        blockFadeIn_.resetObject();
+    if (!intro_fade_in) {
+        current_alpha = 255 * (anim_timer.getElapsedTime() / sf::seconds(1.5));
 
-        // Set the stand by and wait act.
-        setCurrentAct(static_cast<Act>(&standBy));
+        if (current_alpha >= 255) {
+            current_alpha = 255;
+            intro_fade_in = true;
+            anim_timer.restart();
+        }
 
-        // Execute the next act.
-        standBy(window);
-
-        // Return and move on to the next act.
+        GameSprites::Corgi.setColor(sf::Color(255, 255, 255, current_alpha));
         return;
     }
 
-    // Draw the fading in button block.
-    blockFadeIn_.drawObject(window);
-}
+    if (!intro_show) {
+        if (anim_timer.getElapsedTime() > sf::seconds(2)) {
+            intro_show = true;
+            current_alpha = 0;
+            anim_timer.restart();
+        }
 
-void YDC::MainMenu::fadeOut(sf::RenderWindow& window)
-{
-    if (backgroundFadeOut_.getDone() && blockFadeOut_.getDone())
-    {
-        // Reset the background fade out animation.
-        backgroundFadeOut_.resetObject();
-
-        // Reset the button block fade out animation.
-        blockFadeOut_.resetObject();
-
-        // Set the tile field scene.
-        content_.setCurrentScene("TileField");
-
-        // Return and move on to the next scene.
         return;
     }
 
-    // Draw the fading out background.
-    backgroundFadeOut_.drawObject(window);
+    if (!menu_fade_in) {
+        current_alpha = 255 * (anim_timer.getElapsedTime() / sf::seconds(1.5));
 
-    // Draw the fading out button block.
-    blockFadeOut_.drawObject(window);
-}
+        if (current_alpha >= 255) {
+            current_alpha = 255;
+            menu_fade_in = true;
+            anim_timer.restart();
+        }
 
-void YDC::MainMenu::standBy(sf::RenderWindow& window)
-{
-    if (quitButton_.getClicked())
-    {
-        // Close the window.
-        window.close();
-
-        // Return as nothing is left to do.
+        GameSprites::MenuBG.setColor(sf::Color(255, 255, 255, current_alpha));
+        block.setAlpha(current_alpha);
         return;
     }
 
-    if (startButton_.getClicked())
-    {
-        // Set the fade out act.
-        setCurrentAct(static_cast<Act>(&fadeOut));
+    if (!menu_show) {
+        if (quit.getClicked()) {
+            window.close();
+            return;
+        }
 
-        // Execute the next act.
-        fadeOut(window);
+        if (start.getClicked()) {
+            menu_show = true;
+            anim_timer.restart();
+        }
 
-        // Return and move on to the next act.
         return;
     }
-
-    // Draw the background.
-    background_.draw(window);
-
-    // DRaw the button block.
-    block_.draw(window);
 }

@@ -1,4 +1,5 @@
-/.nogit
 /.vscode
 /build
+/temp
 /vendor
+*.o
