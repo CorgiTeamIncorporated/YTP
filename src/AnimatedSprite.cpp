@@ -23,11 +23,13 @@ void AnimatedSprite::move(const sf::Vector2f delta, float speed, sf::Time delta_
     }
 
     time_accumulator += delta_time;
-    std::cout << "Accum: " << time_accumulator << ", delta: " << delta_time << std::endl;
+    // std::cout << "Accum: " << time_accumulator << ", delta: " << delta_time << std::endl;
 
-    float time_as_float = static_cast<float>(delta_time.asMilliseconds());
+    float time_as_float = static_cast<float>(delta_time.asMicroseconds());
 
-    sprite->move(delta * speed * time_as_float); 
+    sprite->move(delta * speed * time_as_float * static_cast<float>(1e-3));
+    // Why not just to take milliseconds? It's 'cause of rounding of floats
+    // If delta_time is quite small, player starts to move very slowly
 
     if (delta == Directions::Left) {
         sprite->setTextureRect(config->left_moves.at(frame_num));

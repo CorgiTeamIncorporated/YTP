@@ -2,9 +2,7 @@
 #include "GameTextures.hpp"
 
 namespace GameSprites {
-    // namespace Dungeon {
-        sf::Sprite Button, Corgi, Logo, MenuBG, Grass, Stone, Player, Spikes, Zombie;
-    // }
+    sf::Sprite Button, Corgi, Logo, MenuBG, Grass, Stone, Player, Spikes, Zombie, Wall;
 }
 
 void GameSprites::init() {
@@ -14,9 +12,10 @@ void GameSprites::init() {
     Corgi.setTexture(GameTextures::Corgi);
     Logo.setTexture(GameTextures::Logo);
     MenuBG.setTexture(GameTextures::MenuBG);
-    /*Dungeon::*/Grass.setTexture(GameTextures::/*Dungeon::*/Grass);
-    /*Dungeon::*/Stone.setTexture(GameTextures::/*Dungeon::*/Stone);
-    /*Dungeon::*/Player.setTexture(GameTextures::/*Dungeon::*/Player);
-    /*Dungeon::*/Spikes.setTexture(GameTextures::/*Dungeon::*/Spikes);
-    /*Dungeon::*/Zombie.setTexture(GameTextures::/*Dungeon::*/Zombie);
+    Grass.setTexture(GameTextures::Grass);
+    Stone.setTexture(GameTextures::Stone);
+    Player.setTexture(GameTextures::Player);
+    Spikes.setTexture(GameTextures::Spikes);
+    Zombie.setTexture(GameTextures::Zombie);
+    Wall.setTexture(GameTextures::Wall);
 }

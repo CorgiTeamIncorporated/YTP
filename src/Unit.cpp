@@ -1,7 +1,6 @@
 #include "Directions.hpp"
 #include "Unit.hpp"
 #include "Scenes/Dungeon.hpp"
-// #include "debug.hpp"
 
 void Unit::move(sf::Time delta_time) {
     // Testing for player not to be stucked with some solid object
@@ -21,8 +20,14 @@ void Unit::move(sf::Time delta_time) {
     unsigned short up = bounds.top / block_size;
     unsigned short down = (bounds.top + bounds.height) / block_size;
 
-    for (int i = left; i <= right; ++i) {
-        for (int j = up; j <= down; ++j) {
+    for (int i = up; i <= down; ++i) {
+        for (int j = left; j <= right; ++j) {
+            if (i < 0 || i >= dungeon_ptr->current_room->map[0].size())
+                continue;
+
+            if (j < 0 || j >= dungeon_ptr->current_room->map.size())
+                continue;
+
             MapObject* object = dungeon_ptr->current_room->map[i][j];
 
             if (object->solid_height != 0) {

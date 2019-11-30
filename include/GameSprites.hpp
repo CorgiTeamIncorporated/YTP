@@ -3,9 +3,6 @@
 #include <SFML/Graphics.hpp>
 
 namespace GameSprites {
-    // namespace Dungeon {
-        extern sf::Sprite Button, Corgi, Logo, MenuBG, Grass, Stone, Player, Spikes, Zombie;
-    // }
-
+    extern sf::Sprite Button, Corgi, Logo, MenuBG, Grass, Stone, Player, Spikes, Zombie, Wall;
     extern void init();
 }

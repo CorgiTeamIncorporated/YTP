@@ -1,9 +1,7 @@
 #include "GameTextures.hpp"
 
 namespace GameTextures {
-    // namespace Dungeon {
-        sf::Texture Button, Corgi, Logo, MenuBG, Grass, Stone, Player, Spikes, Zombie;
-    // }
+    sf::Texture Button, Corgi, Logo, MenuBG, Grass, Stone, Player, Spikes, Zombie, Wall;
 }
 
 void GameTextures::init() {
@@ -12,9 +10,10 @@ void GameTextures::init() {
     Logo.loadFromFile("textures/logo.png");
     MenuBG.loadFromFile("textures/menu_bg.png");
     MenuBG.setRepeated(true);
-    /*Dungeon::*/Grass.loadFromFile("textures/grass1.png");
-    /*Dungeon::*/Stone.loadFromFile("textures/rock.png");
-    /*Dungeon::*/Player.loadFromFile("textures/skeleton-down-steps.png");
-    /*Dungeon::*/Spikes.loadFromFile("textures/thorns2.png");
-    /*Dungeon::*/Zombie.loadFromFile("textures/zombie.png");
+    Grass.loadFromFile("textures/grass1.png");
+    Stone.loadFromFile("textures/rock.png");
+    Player.loadFromFile("textures/skeleton-down-steps.png");
+    Spikes.loadFromFile("textures/thorns2.png");
+    Zombie.loadFromFile("textures/zombie.png");
+    Wall.loadFromFile("textures/wall.png");
 }

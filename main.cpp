@@ -9,58 +9,63 @@
 #include "Enemies/Zombie.hpp"
 #include <vector>
 
-int main() {
-    GameFonts::init();
-    GameSprites::init();
+void start_test_room() {
+    unsigned int tile_size = 100;
+    unsigned int width = 10, height = 8;
 
-    GameRoom room;
+    sf::RenderWindow* window = new sf::RenderWindow(
+        sf::VideoMode(width * tile_size, height * tile_size), "Test window"
+    );
 
-    room.map = std::vector<std::vector<MapObject*>>(10, std::vector<MapObject*>(10, nullptr));
+    AnimatedSprite* zombie_sprite = new AnimatedSprite(&GameSprites::Zombie, &ZombieConfig);
+    AnimatedSprite* player_sprite = new AnimatedSprite(&GameSprites::Player, &SkeletonConfig);
 
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j++) {
-            if(i == 3 && j == 3)
-                room.map[i][j] = new MapObject(GameSprites::/*Dungeon::*/Grass, GameSprites::/*Dungeon::*/Spikes, 100);
-            else if (i == 5 && j == 5 || i == 4 && j == 4)
-                room.map[i][j] = new MapObject(GameSprites::/*Dungeon::*/Grass, GameSprites::/*Dungeon::*/Stone, 80);
+    Zombie* zombie = new Zombie(zombie_sprite);
+    zombie->set_speed(0.1);
+    zombie->set_solid_height(32);
+    zombie->get_sprite().setPosition(2 * tile_size, 2 * tile_size);
+
+    Unit* player = new Unit(player_sprite);
+    player->set_speed(0.5);
+    player->set_solid_height(30);
+    player->get_sprite().setPosition(tile_size, tile_size);
+
+    GameRoom* room = new GameRoom;
+
+    room->map = std::vector<std::vector<MapObject*>>(
+        height, std::vector<MapObject*>(width, nullptr)
+    );
+
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            if (i == 0 || i == height - 1 || j == 0 || j == width - 1)
+                room->map[i][j] = new MapObject(GameSprites::Grass, GameSprites::Wall, 99);
             else
-                room.map[i][j] = new MapObject(GameSprites::/*Dungeon::*/Grass, sf::Sprite());
+                room->map[i][j] = new MapObject(GameSprites::Grass, sf::Sprite());
 
-            room.map[i][j]->set_position(sf::Vector2f(100 * i, 100 * j));
+            room->map[i][j]->set_position(sf::Vector2f(tile_size * j, tile_size * i));
         }
     }
 
-    AnimatedSprite zombie_sprite(&GameSprites::Zombie, &ZombieConfig);
-    Zombie zombie(&zombie_sprite);
+    Dungeon* dungeon = new Dungeon;
+    dungeon->set_player(player);
+    dungeon->set_room(room);
+    dungeon->set_tile_size(tile_size);
 
-    zombie.set_speed(0.1);
-    zombie.set_solid_height(32);
-
-    AnimatedSprite player_sprite(&GameSprites::/*Dungeon::*/Player, &SkeletonConfig);
-    Unit player(&player_sprite);
-
-    player.set_speed(0.5);
-    player.set_solid_height(30);
-
-    Dungeon dungeon;
-
-    dungeon.set_player(&player);
-    dungeon.set_room(&room);
-    dungeon.set_tile_size(100);
-
-    room.dungeon_ptr = &dungeon;
-    room.add_enemy(&zombie);
+    room->dungeon_ptr = dungeon;
+    room->add_enemy(zombie);
 
     MainMenu mainMenu;
+    mainMenu.dungeon_ptr = dungeon;
 
-    mainMenu.dungeon_ptr = &dungeon;
-
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "Test window");
-    GameManager manager(&mainMenu, &window);
-
-    mainMenu.game_manager_ptr = &manager;
-
-    manager.start();
-
-    return EXIT_SUCCESS;
+    GameManager* manager = new GameManager(&mainMenu, window);
+    mainMenu.game_manager_ptr = manager;
+    manager->start();
 }
+
+int main(int argc, char** argv) {
+    GameFonts::init();
+    GameSprites::init();
+    start_test_room();
+    return EXIT_SUCCESS;
+ }
