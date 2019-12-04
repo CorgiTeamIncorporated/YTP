@@ -1,16 +1,21 @@
 #include "Directions.hpp"
 #include "Unit.hpp"
 #include "Scenes/Dungeon.hpp"
+#include <iostream>
 
 void Unit::move(sf::Time delta_time) {
     // Testing for player not to be stucked with some solid object
+
+    // `bounds` are boundaries of player on the next tick
     sf::FloatRect bounds = sprite->get_sprite().getGlobalBounds();
 
     bounds.top += solid_height;
     bounds.height -= solid_height;
 
-    bounds.left += direction.x * speed * delta_time.asMilliseconds();
-    bounds.top += direction.y * speed * delta_time.asMilliseconds();
+    float time_as_float = static_cast<float>(delta_time.asMicroseconds());
+
+    bounds.left += direction.x * speed * time_as_float * static_cast<float>(1e-3);
+    bounds.top += direction.y * speed * time_as_float * static_cast<float>(1e-3);
 
     unsigned short block_size = dungeon_ptr->tile_size;
 
@@ -32,7 +37,7 @@ void Unit::move(sf::Time delta_time) {
 
             if (object->solid_height != 0) {
                 if (object->solid_part.getGlobalBounds().intersects(bounds)) {
-                    return; // TODO: move player in opposite direction until intersects
+                    return;
                 }
             }
         }
