@@ -27,10 +27,10 @@ void Unit::move(sf::Time delta_time) {
 
     for (int i = up; i <= down; ++i) {
         for (int j = left; j <= right; ++j) {
-            if (i < 0 || i >= dungeon_ptr->current_room->map.size())
+            if (i < 0 || i >= dungeon_ptr->current_room->height)
                 continue;
 
-            if (j < 0 || j >= dungeon_ptr->current_room->map[0].size())
+            if (j < 0 || j >= dungeon_ptr->current_room->width)
                 continue;
 
             MapObject* object = dungeon_ptr->current_room->map[i][j];

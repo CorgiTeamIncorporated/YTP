@@ -3,7 +3,7 @@
 
 class AbstractScene {
 public:
-    virtual void preload() = 0;
+    virtual void preload(sf::RenderWindow& window) = 0;
     virtual void update(sf::RenderWindow& window) = 0;
     virtual void render(sf::RenderWindow& window) = 0;
 

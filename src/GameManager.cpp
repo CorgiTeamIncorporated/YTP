@@ -6,7 +6,7 @@ GameManager::GameManager(AbstractScene* scene, sf::RenderWindow* window) {
 }
 
 void GameManager::start() {
-    scene->preload();
+    scene->preload(*window);
 
     while (window->isOpen()) {
         scene->update(*window);

@@ -14,6 +14,8 @@ void start_test_room() {
         sf::VideoMode(width * tile_size, height * tile_size), "Test window"
     );
 
+    window->setFramerateLimit(60);
+
     AnimatedSprite* zombie_sprite = new AnimatedSprite(&GameSprites::Zombie, &ZombieConfig);
     AnimatedSprite* player_sprite = new AnimatedSprite(&GameSprites::Player, &SkeletonConfig);
 
@@ -29,9 +31,9 @@ void start_test_room() {
 
     GameRoom* room = new GameRoom;
 
-    room->map = std::vector<std::vector<MapObject*>>(
+    room->set_map(std::vector<std::vector<MapObject*>>(
         height, std::vector<MapObject*>(width, nullptr)
-    );
+    ));
 
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {

@@ -1,4 +1,5 @@
 #include "Scenes/Dungeon.hpp"
+#include <iostream>
 
 void Dungeon::render(sf::RenderWindow& window) {
     // Drawing background
@@ -32,11 +33,37 @@ void Dungeon::render(sf::RenderWindow& window) {
     window.display();
 }
 
+void Dungeon::adjust_sizes(sf::RenderWindow& window, sf::Event event) {
+    float real_height = current_room->height * tile_size;
+    float real_width = current_room->width * tile_size;
+
+    float width = event.size.width,
+          height = event.size.height;
+
+    float scale = height / real_height;
+
+    if (width < scale * real_width) {
+        width = scale * real_width;
+        window.setSize(sf::Vector2u(width, height));
+    }
+
+    float offset = (width - scale * real_width) / 2.0;
+
+    sf::View view(sf::FloatRect(0, 0, real_width, real_height));
+
+    view.setViewport(sf::FloatRect(offset / width, 0.f,
+                                   scale * real_width / width, 1.f));
+
+    window.setView(view);
+}
+
 void Dungeon::update(sf::RenderWindow& window) {
     sf::Time delta = timer.restart(); sf::Event event;
 
     while (window.pollEvent(event))
-        if (event.type == sf::Event::Closed)
+        if (event.type == sf::Event::Resized)
+            adjust_sizes(window, event);
+        else if (event.type == sf::Event::Closed)
             window.close();
         else
             handle_event(event);
@@ -83,7 +110,7 @@ void Dungeon::set_room(GameRoom* room) {
     this->current_room = room;
 }
 
-void Dungeon::preload() {
+void Dungeon::preload(sf::RenderWindow& window) {
     return;
 }
 

@@ -14,10 +14,11 @@ public:
     void set_room(GameRoom* room);
     void set_player(Unit* player);
     void set_tile_size(unsigned int size);
+    void adjust_sizes(sf::RenderWindow& window, sf::Event event);
 
     void handle_event(sf::Event event);
 
-    void preload();
+    void preload(sf::RenderWindow& window);
     void update(sf::RenderWindow& window);
     void render(sf::RenderWindow& window);
 
