@@ -7,6 +7,12 @@ class Zombie;
 
 class Dungeon: public AbstractScene {
 private:
+    sf::Texture health_outline_texture;
+    sf::Texture health_bar_texture;
+
+    sf::Sprite* health_outline;
+    sf::Sprite* health_bar;
+
     unsigned int tile_size;
     GameRoom* current_room;
     Unit* player;

@@ -8,13 +8,14 @@ class Unit {
 protected:
     unsigned short solid_height;
     AnimatedSprite* sprite;
+    unsigned short health;
     Dungeon* dungeon_ptr;
     float speed;
 public:
     sf::Vector2f direction;
 
     Unit(AnimatedSprite* sprite, Dungeon* dungeon = nullptr):
-        sprite(sprite), dungeon_ptr(dungeon) {};
+        sprite(sprite), dungeon_ptr(dungeon), health(100) {};
 
     void move(sf::Time delta);
 

@@ -29,6 +29,10 @@ void Dungeon::render(sf::RenderWindow& window) {
         }
     }
 
+    // Drawing health bar
+    window.draw(*health_outline);
+    window.draw(*health_bar);
+
     // Saving changes on the screen
     window.display();
 }
@@ -72,6 +76,13 @@ void Dungeon::update(sf::RenderWindow& window) {
 
     for (AbstractEnemy* enemy: current_room->enemies)
         enemy->ai_move(delta);
+
+    unsigned short health_bar_height = health_bar->getTextureRect().height;
+    unsigned short step = 3;
+
+    health_bar->setTextureRect(
+        sf::IntRect(0, 0, step * player->health, health_bar_height)
+    );
 }
 
 void Dungeon::handle_event(sf::Event event) {
@@ -111,7 +122,19 @@ void Dungeon::set_room(GameRoom* room) {
 }
 
 void Dungeon::preload(sf::RenderWindow& window) {
-    return;
+    health_bar_texture.loadFromFile("textures/health.png");
+    health_outline_texture.loadFromFile("textures/health-outline.png");
+
+    health_bar = new sf::Sprite(health_bar_texture);
+    health_outline = new sf::Sprite(health_outline_texture);
+
+    health_outline->setPosition(
+        window.getSize().x - health_outline->getTextureRect().width, 0
+    );
+
+    health_bar->setPosition(
+        health_outline->getPosition() + sf::Vector2f(36, 8)
+    );
 }
 
 void Dungeon::set_tile_size(unsigned int size) {
