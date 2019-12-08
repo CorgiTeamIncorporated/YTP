@@ -7,8 +7,8 @@ struct GameRoom {
     std::vector<AbstractEnemy*> enemies;
     std::vector<std::vector<MapObject*>> map;
 
-    GameRoom* left; GameRoom* right;
-    GameRoom* up; GameRoom* down;
+    GameRoom* left = nullptr; GameRoom* right = nullptr;
+    GameRoom* up = nullptr; GameRoom* down = nullptr;
 
     Dungeon* dungeon_ptr;
 

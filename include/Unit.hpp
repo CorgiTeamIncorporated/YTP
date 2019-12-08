@@ -7,10 +7,11 @@ class Dungeon;
 class Unit {
 protected:
     unsigned short solid_height;
-    AnimatedSprite* sprite;
     unsigned short health;
-    Dungeon* dungeon_ptr;
     float speed;
+
+    AnimatedSprite* sprite;
+    Dungeon* dungeon_ptr;
 public:
     sf::Vector2f direction;
 
@@ -22,7 +23,12 @@ public:
     sf::Sprite& get_sprite();
 
     void set_solid_height(unsigned short height);
+    void set_position(sf::Vector2f position);
     void set_speed(float speed);
+
+    sf::FloatRect get_solid_bounds();
+    sf::Vector2f get_position();
+    sf::FloatRect get_bounds();
   
     friend class Dungeon;
 };

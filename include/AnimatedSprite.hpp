@@ -10,6 +10,12 @@ private:
     sf::Sprite* sprite;
 public:
     AnimatedSprite(sf::Sprite* sprite, const AnimatedSpriteConfig* config);
+
     void move(const sf::Vector2f delta, float speed, sf::Time delta_time);
+
     sf::Sprite& get_sprite();
+    sf::FloatRect get_bounds();
+
+    sf::Vector2f get_position();
+    void set_position(sf::Vector2f position);
 };

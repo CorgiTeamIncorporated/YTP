@@ -23,7 +23,6 @@ void AnimatedSprite::move(const sf::Vector2f delta, float speed, sf::Time delta_
     }
 
     time_accumulator += delta_time;
-    // std::cout << "Accum: " << time_accumulator << ", delta: " << delta_time << std::endl;
 
     float time_as_float = static_cast<float>(delta_time.asMicroseconds());
 
@@ -44,4 +43,16 @@ void AnimatedSprite::move(const sf::Vector2f delta, float speed, sf::Time delta_
 
 sf::Sprite& AnimatedSprite::get_sprite() {
     return *sprite;
+}
+
+sf::FloatRect AnimatedSprite::get_bounds() {
+    return sprite->getGlobalBounds();
+}
+
+sf::Vector2f AnimatedSprite::get_position() {
+    return sprite->getPosition();
+}
+
+void AnimatedSprite::set_position(sf::Vector2f position) {
+    sprite->setPosition(position);
 }

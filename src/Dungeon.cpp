@@ -74,6 +74,8 @@ void Dungeon::update(sf::RenderWindow& window) {
 
     player->move(delta);
 
+    check_rooms();
+
     for (AbstractEnemy* enemy: current_room->enemies)
         enemy->ai_move(delta);
 
@@ -139,4 +141,39 @@ void Dungeon::preload(sf::RenderWindow& window) {
 
 void Dungeon::set_tile_size(unsigned int size) {
     this->tile_size = size;
+}
+
+void Dungeon::check_rooms() {
+    // This function checks if player intersects any door
+    // In that case, function will replace
+    // the room pointer with another one
+
+    // Getting boundaries of each door
+    float hor_middle = (current_room->width / 2) * tile_size;
+    float ver_middle = (current_room->height / 2) * tile_size;
+    float right_side = (current_room->width - 1) * tile_size;
+    float bottom_side = (current_room->height - 1) * tile_size;
+
+    sf::FloatRect up(hor_middle, 0, tile_size, tile_size);
+    sf::FloatRect left(0, ver_middle, tile_size, tile_size);
+    sf::FloatRect right(right_side, ver_middle, tile_size, tile_size);
+    sf::FloatRect bottom(hor_middle, bottom_side, tile_size, tile_size);
+
+    // Check if player intersects any door
+    sf::FloatRect solid_bounds = player->get_solid_bounds();
+    sf::FloatRect player_bounds = player->get_bounds();
+
+    if (current_room->up != nullptr && up.intersects(solid_bounds)) {
+        current_room = current_room->up;
+        player->set_position(sf::Vector2f(player_bounds.left, bottom.top - tile_size));
+    } else if (current_room->down != nullptr && bottom.intersects(solid_bounds)) {
+        current_room = current_room->down;
+        player->set_position(sf::Vector2f(player_bounds.left, up.top + tile_size));
+    } else if (current_room->left != nullptr && left.intersects(solid_bounds)) {
+        current_room = current_room->left;
+        player->set_position(sf::Vector2f(right.left - tile_size, player_bounds.top));
+    } else if (current_room->right != nullptr && right.intersects(solid_bounds)) {
+        current_room = current_room->right;
+        player->set_position(sf::Vector2f(left.left + tile_size, player_bounds.top));
+    }
 }

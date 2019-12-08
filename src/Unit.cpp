@@ -58,3 +58,35 @@ void Unit::set_speed(float speed) {
 void Unit::set_solid_height(unsigned short height) {
     solid_height = height;
 }
+
+sf::FloatRect Unit::get_solid_bounds() {
+    sf::FloatRect solid_part = sprite->get_bounds();
+    solid_part.top += solid_part.height - solid_height;
+    solid_part.height = solid_height;
+
+    return solid_part;
+}
+
+sf::Vector2f Unit::get_position() {
+    return sprite->get_position();
+}
+
+void Unit::set_position(sf::Vector2f position) {
+    // This function sets the player's position considering
+    // the player a square block with a side equal to
+    // `tile_size` and a sprite aligned to the bottom
+
+    float delta = dungeon_ptr->tile_size - sprite->get_bounds().height;
+    sprite->set_position(position + sf::Vector2f(0, delta));
+}
+
+sf::FloatRect Unit::get_bounds() {
+    // Returns bounds of the player considering the player
+    // a square with a side equal to `tile_size`
+
+    sf::FloatRect bounds = sprite->get_bounds();
+    bounds.top -= dungeon_ptr->tile_size - sprite->get_bounds().height;
+    bounds.height = dungeon_ptr->tile_size;
+
+    return bounds;
+}

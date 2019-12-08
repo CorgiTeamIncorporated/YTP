@@ -21,6 +21,7 @@ public:
     void set_player(Unit* player);
     void set_tile_size(unsigned int size);
     void adjust_sizes(sf::RenderWindow& window, sf::Event event);
+    void check_rooms();
 
     void handle_event(sf::Event event);
 
