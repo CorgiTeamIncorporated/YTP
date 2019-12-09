@@ -13,9 +13,9 @@ public:
 
     void move(const sf::Vector2f delta, float speed, sf::Time delta_time);
 
-    sf::Sprite& get_sprite();
     sf::FloatRect get_bounds();
+    sf::Sprite& get_sprite();
 
-    sf::Vector2f get_position();
     void set_position(sf::Vector2f position);
+    sf::Vector2f get_position();
 };

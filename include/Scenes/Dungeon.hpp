@@ -7,9 +7,6 @@ class Zombie;
 
 class Dungeon: public AbstractScene {
 private:
-    sf::Texture health_outline_texture;
-    sf::Texture health_bar_texture;
-
     sf::Sprite* health_outline;
     sf::Sprite* health_bar;
 
@@ -17,10 +14,11 @@ private:
     GameRoom* current_room;
     Unit* player;
 public:
+    void adjust_sizes(sf::RenderWindow& window, sf::Event event);
+    void attack_player(unsigned short damage);
+    void set_tile_size(unsigned int size);
     void set_room(GameRoom* room);
     void set_player(Unit* player);
-    void set_tile_size(unsigned int size);
-    void adjust_sizes(sf::RenderWindow& window, sf::Event event);
     void check_rooms();
 
     void handle_event(sf::Event event);

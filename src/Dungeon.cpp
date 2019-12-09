@@ -60,6 +60,8 @@ void Dungeon::adjust_sizes(sf::RenderWindow& window, sf::Event event) {
                                    scale * real_width / width, 1.f));
 
     window.setView(view);
+
+    timer.restart();
 }
 
 void Dungeon::update(sf::RenderWindow& window) {
@@ -79,6 +81,11 @@ void Dungeon::update(sf::RenderWindow& window) {
 
     for (AbstractEnemy* enemy: current_room->enemies)
         enemy->ai_move(delta);
+
+    if (player->health < 0) {
+        // Here are some actions when player died
+        player->health = 0;
+    }
 
     unsigned short health_bar_height = health_bar->getTextureRect().height;
     unsigned short step = 3;
@@ -174,4 +181,8 @@ void Dungeon::check_rooms() {
         current_room = current_room->right;
         player->set_position(sf::Vector2f(left.left + tile_size, player_bounds.top));
     }
+}
+
+void Dungeon::attack_player(unsigned short damage) {
+    player->health -= damage;
 }

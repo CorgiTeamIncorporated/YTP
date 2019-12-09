@@ -7,6 +7,9 @@ void Zombie::ai_move(sf::Time delta_time) {
 
     sf::Vector2f delta = player_pos - enemy_pos;
 
+    if (abs(delta.x) + abs(delta.y) < 10)
+        dungeon_ptr->attack_player(1);
+
     if (abs(delta.x) > abs(delta.y)) {
         if (delta.x < 0)
             this->direction = Directions::Left;

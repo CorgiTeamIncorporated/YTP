@@ -7,7 +7,7 @@ class Dungeon;
 class Unit {
 protected:
     unsigned short solid_height;
-    unsigned short health;
+    signed short health;
     float speed;
 
     AnimatedSprite* sprite;
