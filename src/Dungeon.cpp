@@ -1,4 +1,5 @@
 #include "Scenes/Dungeon.hpp"
+#include "GameSprites.hpp"
 #include <iostream>
 
 void Dungeon::render(sf::RenderWindow& window) {
@@ -124,11 +125,8 @@ void Dungeon::set_room(GameRoom* room) {
 }
 
 void Dungeon::preload(sf::RenderWindow& window) {
-    health_bar_texture.loadFromFile("textures/health.png");
-    health_outline_texture.loadFromFile("textures/health-outline.png");
-
-    health_bar = new sf::Sprite(health_bar_texture);
-    health_outline = new sf::Sprite(health_outline_texture);
+    health_bar = &GameSprites::HealthBar;
+    health_outline = &GameSprites::HealthOutline;
 
     health_outline->setPosition(
         window.getSize().x - health_outline->getTextureRect().width, 0
