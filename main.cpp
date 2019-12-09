@@ -1,5 +1,3 @@
-// #include "debug.hpp"
-// #include "Game.hpp"
 #include "GameRoom.hpp"
 #include "GameSprites.hpp"
 #include "GameManager.hpp"
