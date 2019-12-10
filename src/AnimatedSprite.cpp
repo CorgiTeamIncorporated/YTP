@@ -8,7 +8,9 @@ AnimatedSprite::AnimatedSprite(sf::Sprite* sprite, const AnimatedSpriteConfig* c
     this->config = config;
     this->frame_num = 0;
     this->time_accumulator = sf::Time::Zero;
-    this->sprite->setTextureRect(config->down_moves.at(0));
+
+    if (config != nullptr)
+        this->sprite->setTextureRect(config->down_moves.at(0));
 }
 
 void AnimatedSprite::move(const sf::Vector2f delta, float speed, sf::Time delta_time) {

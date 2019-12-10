@@ -2,6 +2,7 @@
 #include "GameSprites.hpp"
 #include "GameManager.hpp"
 #include "Enemies/Zombie.hpp"
+#include "Enemies/Spikes.hpp"
 #include <vector>
 
 GameRoom* get_test_room(unsigned int height, unsigned int width, unsigned int tile_size) {
@@ -38,6 +39,7 @@ void start_test_dungeon() {
 
     AnimatedSprite* zombie_sprite = new AnimatedSprite(&GameSprites::Zombie, &ZombieConfig);
     AnimatedSprite* player_sprite = new AnimatedSprite(&GameSprites::Player, &SkeletonConfig);
+    AnimatedSprite* spikes_sprite = new AnimatedSprite(&GameSprites::Spikes, nullptr);
 
     Zombie* zombie = new Zombie(zombie_sprite);
     zombie->set_speed(0.1);
@@ -49,9 +51,11 @@ void start_test_dungeon() {
     player->set_solid_height(30);
     player->get_sprite().setPosition(tile_size, tile_size);
 
+    Spikes* spikes = new Spikes(spikes_sprite);
+    spikes->get_sprite().setPosition(2*tile_size, 2*tile_size);
+
     GameRoom* left_room = get_test_room(height, width, tile_size);
     GameRoom* right_room = get_test_room(height, width, tile_size);
-
     left_room->right = right_room;
     right_room->left = left_room;
 
@@ -63,6 +67,8 @@ void start_test_dungeon() {
     left_room->dungeon_ptr = dungeon;
     left_room->add_enemy(zombie);
 
+    right_room->dungeon_ptr = dungeon;
+    right_room->add_enemy(spikes);
     GameManager* manager = new GameManager(dungeon, window);
     manager->start();
 }

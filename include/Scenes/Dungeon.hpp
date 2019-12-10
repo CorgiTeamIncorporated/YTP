@@ -29,4 +29,5 @@ public:
 
     friend class Unit;
     friend class Zombie;
+    friend class Spikes;
 };
