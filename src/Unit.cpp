@@ -6,7 +6,6 @@
 void Unit::move() {
     // Testing for player not to be stucked with some solid object
     sf::Time delta_time = clock->restart();
-    std::cout << delta_time.asMilliseconds() << std::endl;
     sf::FloatRect bounds = sprite->get_sprite().getGlobalBounds();
 
     bounds.top += solid_height;
@@ -22,18 +21,6 @@ void Unit::move() {
 
     unsigned short up = bounds.top / block_size;
     unsigned short down = (bounds.top + bounds.height) / block_size;
-
-    for (int i = left; i <= right; ++i) {
-        for (int j = up; j <= down; ++j) {
-            MapObject* object = game_ptr->current_room->map[i][j];
-
-            if (object->solid_height != 0) {
-                if (object->solid_part.getGlobalBounds().intersects(bounds)) {
-                    return; // TODO: move player in opposite direction until intersects
-                }
-            }
-        }
-    }
 
     if (direction != Directions::NullDirection)
         sprite->move(direction, speed*delta_time.asMilliseconds());
@@ -54,11 +41,10 @@ void Unit::set_speed(float speed) {
 void Unit::set_solid_height(unsigned short height) {
     solid_height = height;
 }
-
-unsigned short Unit::get_position_x(){
+int Unit::get_position_x(){
     return sprite->get_sprite().getGlobalBounds().left;
 }
 
-unsigned short Unit::get_position_y(){
+int Unit::get_position_y(){
     return sprite->get_sprite().getGlobalBounds().top;
 }

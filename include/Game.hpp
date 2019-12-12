@@ -1,4 +1,5 @@
-#include "GameRoom.hpp"
+#include "Room.hpp"
+#include <vector>
 #pragma once
 
 class Unit;
@@ -7,11 +8,11 @@ class Game {
 private:
     sf::RenderWindow* window;
     sf::View view;
-    GameRoom* current_room;
+    std::vector<Room*> rooms;
     Unit* player;
 public:
-    Game(sf::RenderWindow* window, GameRoom* room, Unit* player):
-      window(window), current_room(room), player(player) {
+    Game(sf::RenderWindow* window, std::vector<Room*> &rooms, Unit* player):
+      window(window), rooms(rooms), player(player) {
         this->player->set_game_ptr(this);
       };
 

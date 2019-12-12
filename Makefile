@@ -6,10 +6,10 @@ CXX=$(GCC_FOLDER)\bin\g++.exe
 LIB_DIR=$(GCC_FOLDER)\lib
 HEADER_DIR=$(GCC_FOLDER)\include
 
-all: Game.o Unit.o AnimatedSprite.o MapObject.o
+all: Game.o Unit.o AnimatedSprite.o MapObject.o MapBuilder.o Room.o
 	$(CXX) main.cpp $^ -I $(HEADER_DIR) -I "include" -L $(LIB_DIR) $(LIBS) -o main.exe
 
-debug: Game-debug.o Unit-debug.o AnimatedSprite-debug.o MapObject-debug.o
+debug: Game-debug.o Unit-debug.o AnimatedSprite-debug.o MapObject-debug.o Room-debug.o MapBuilder-debug.o
 	$(CXX) -g main.cpp $^ -I $(HEADER_DIR) -I "include" -L $(LIB_DIR) $(LIBS) -o main-debug.exe
 
 %-debug.o: src/%.cpp include/%.hpp

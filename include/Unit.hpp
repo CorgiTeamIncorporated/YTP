@@ -24,6 +24,6 @@ public:
     void set_game_ptr(Game* ptr);
     void set_solid_height(unsigned short height);
     void set_speed(float speed);
-    unsigned short get_position_x();
-    unsigned short get_position_y();
+    int get_position_x();
+    int get_position_y();
 };
