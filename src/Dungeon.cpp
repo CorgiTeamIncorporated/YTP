@@ -15,8 +15,11 @@ void Dungeon::render(sf::RenderWindow& window) {
     }
 
     // Drawing the enemies
-    for (AbstractEnemy* enemy: current_room->enemies)
-        window.draw(enemy->get_sprite());
+    for (AbstractEnemy* enemy: current_room->enemies) {
+        if (!enemy->killed()) {
+            window.draw(enemy->get_sprite());
+        }
+    }
 
     // Drawing the player
     window.draw(player->get_sprite());
@@ -65,7 +68,7 @@ void Dungeon::adjust_sizes(sf::RenderWindow& window, sf::Event event) {
 }
 
 void Dungeon::update(sf::RenderWindow& window) {
-    sf::Time delta = timer.restart(); sf::Event event;
+    sf::Event event;
 
     while (window.pollEvent(event))
         if (event.type == sf::Event::Resized)
@@ -75,12 +78,17 @@ void Dungeon::update(sf::RenderWindow& window) {
         else
             handle_event(event);
 
+    sf::Time delta = timer.restart(); 
+
     player->move(delta);
 
     check_rooms();
 
-    for (AbstractEnemy* enemy: current_room->enemies)
-        enemy->ai_move(delta);
+    for (AbstractEnemy* enemy: current_room->enemies) {
+        if (!enemy->killed()) {
+            enemy->ai_move(delta);
+        }
+    }
 
     if (player->health < 0) {
         // Here are some actions when player died
@@ -117,8 +125,10 @@ void Dungeon::handle_event(sf::Event event) {
         else if (event.key.code == sf::Keyboard::D)
             expected = Directions::Right;
 
-        if (player->direction == expected)
+        if (player->direction == expected) {
             player->direction = Directions::NullDirection;
+            player->sprite->set_frame(0);
+        }
     }
 }
 

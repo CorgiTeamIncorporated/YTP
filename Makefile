@@ -1,5 +1,4 @@
-# GCC_FOLDER=${MINGW730_PATH}
-GCC_FOLDER=C:\x86_64-7.3.0-release-posix-seh-rt_v5-rev0\mingw64
+GCC_FOLDER=${MINGW730_PATH}
 
 LIBS=-lsfml-graphics -lsfml-window -lsfml-system
 

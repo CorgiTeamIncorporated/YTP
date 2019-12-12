@@ -12,6 +12,8 @@ protected:
 
     AnimatedSprite* sprite;
     Dungeon* dungeon_ptr;
+
+    bool is_killed = false;
 public:
     sf::Vector2f direction;
 
@@ -29,6 +31,8 @@ public:
     sf::FloatRect get_solid_bounds();
     sf::Vector2f get_position();
     sf::FloatRect get_bounds();
+
+    bool killed();
   
     friend class Dungeon;
 };

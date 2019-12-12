@@ -3,7 +3,7 @@
 
 namespace GameSprites {
     extern sf::Sprite Grass, Stone, Player, Spikes, Zombie, Wall,
-               HealthBar, HealthOutline;
+               HealthBar, HealthOutline, Door;
 
     extern void init_sprites();
 };

@@ -90,3 +90,7 @@ sf::FloatRect Unit::get_bounds() {
 
     return bounds;
 }
+
+bool Unit::killed() {
+    return is_killed;
+}

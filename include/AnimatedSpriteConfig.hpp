@@ -32,7 +32,7 @@ const AnimatedSpriteConfig SkeletonConfig = {
      sf::IntRect(100, 0, 50, 75), sf::IntRect(150, 0, 50, 75)},
     {sf::IntRect(0, 0, 50, 75), sf::IntRect(50, 0, 50, 75),
      sf::IntRect(100, 0, 50, 75), sf::IntRect(150, 0, 50, 75)}, 4,
-    sf::milliseconds(1000)
+    sf::milliseconds(100)
 };
 
 const AnimatedSpriteConfig ZombieConfig = {
@@ -45,4 +45,12 @@ const AnimatedSpriteConfig ZombieConfig = {
     {sf::IntRect(0, 0, 32, 48), sf::IntRect(32, 0, 32, 48),
      sf::IntRect(64, 0, 32, 48), sf::IntRect(96, 0, 32, 48)}, 4,
     sf::milliseconds(100)
+};
+
+const AnimatedSpriteConfig SpikesConfig = {
+    {sf::IntRect(0, 0, 100, 100), sf::IntRect(100, 0, 100, 100)},
+    {sf::IntRect(0, 0, 100, 100), sf::IntRect(100, 0, 100, 100)},
+    {sf::IntRect(0, 0, 100, 100), sf::IntRect(100, 0, 100, 100)},
+    {sf::IntRect(0, 0, 100, 100), sf::IntRect(100, 0, 100, 100)},
+    2, sf::Time::Zero
 };

@@ -2,7 +2,7 @@
 
 namespace GameTextures {
     sf::Texture Grass, Stone, Player, Spikes, Zombie, Wall,
-                HealthBar, HealthOutline;
+                HealthBar, HealthOutline, Door;
 }
 
 void GameTextures::init_textures() {
@@ -14,4 +14,5 @@ void GameTextures::init_textures() {
     Wall.loadFromFile("textures/wall.png");
     HealthBar.loadFromFile("textures/health.png");
     HealthOutline.loadFromFile("textures/health-outline.png");
+    Door.loadFromFile("textures/door.png");
 }

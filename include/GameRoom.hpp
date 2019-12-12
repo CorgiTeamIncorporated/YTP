@@ -17,4 +17,9 @@ struct GameRoom {
 
     void set_map(std::vector<std::vector<MapObject*>> map);
     void add_enemy(AbstractEnemy* enemy);
+
+    void set_bottom_room(GameRoom* room);
+    void set_right_room(GameRoom* room);
+    void set_left_room(GameRoom* room);
+    void set_top_room(GameRoom* room);
 };
