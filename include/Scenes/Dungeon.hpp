@@ -4,6 +4,7 @@
 
 class Unit;
 class Zombie;
+class FireBall;
 
 class Dungeon: public AbstractScene {
 private:
@@ -30,4 +31,5 @@ public:
     friend class Unit;
     friend class Zombie;
     friend class Spikes;
+    friend class FireBall;
 };

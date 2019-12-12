@@ -2,7 +2,7 @@
 
 namespace GameSprites {
     sf::Sprite Grass, Stone, Player, Spikes, Zombie, Wall,
-               HealthBar, HealthOutline, Door;
+               HealthBar, HealthOutline, Door, FireBall;
 }
 
 void GameSprites::init_sprites() {
@@ -17,4 +17,5 @@ void GameSprites::init_sprites() {
     HealthBar.setTexture(GameTextures::HealthBar);
     HealthOutline.setTexture(GameTextures::HealthOutline);
     Door.setTexture(GameTextures::Door);
+    FireBall.setTexture(GameTextures::FireBall);
 }

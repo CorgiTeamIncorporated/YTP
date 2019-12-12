@@ -54,3 +54,17 @@ const AnimatedSpriteConfig SpikesConfig = {
     {sf::IntRect(0, 0, 100, 100), sf::IntRect(100, 0, 100, 100)},
     2, sf::Time::Zero
 };
+
+const AnimatedSpriteConfig FireBallConfig = {
+    {sf::IntRect(0, 100, 100, 50)}, {sf::IntRect(0, 150, 100, 50)},
+    {sf::IntRect(25, 200, 50, 100)}, {sf::IntRect(25, 0, 50, 100)},
+    1, sf::seconds(1)
+};
+
+/*
+const AnimatedSpriteConfig FireBallConfig = {
+    {sf::IntRect(0, 200, 200, 100)}, {sf::IntRect(0, 300, 200, 100)},
+    {sf::IntRect(50, 400, 100, 200)}, {sf::IntRect(50, 0, 100, 200)},
+    1, sf::Time::Zero
+};
+*/

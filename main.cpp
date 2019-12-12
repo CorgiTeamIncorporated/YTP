@@ -3,6 +3,7 @@
 #include "GameManager.hpp"
 #include "Enemies/Zombie.hpp"
 #include "Enemies/Spikes.hpp"
+#include "Enemies/FireBall.hpp"
 #include <vector>
 
 GameRoom* get_test_room(unsigned int height, unsigned int width, unsigned int tile_size) {
@@ -54,6 +55,9 @@ void start_test_dungeon() {
     AnimatedSprite* spikes_sprite = new AnimatedSprite(
         new sf::Sprite(GameSprites::Spikes), &SpikesConfig);
 
+    AnimatedSprite* fireball_sprite = new AnimatedSprite(
+        new sf::Sprite(GameSprites::FireBall), &FireBallConfig);
+
     Zombie* zombie = new Zombie(zombie_sprite);
     zombie->set_speed(0.2);
     zombie->set_solid_height(32);
@@ -71,6 +75,9 @@ void start_test_dungeon() {
 
     Spikes* spikes = new Spikes(spikes_sprite);
     spikes->get_sprite().setPosition(2 * tile_size, 2 * tile_size);
+
+    FireBall* fireball = new FireBall(fireball_sprite);
+    fireball->get_sprite().setPosition(5 * tile_size, 5 * tile_size);
 
     GameRoom* main_room = get_test_room(height, width, tile_size);
     GameRoom* right_room = get_test_room(height, width, tile_size);
@@ -94,6 +101,7 @@ void start_test_dungeon() {
     right_room->add_enemy(spikes);
 
     bottom_room->dungeon_ptr = dungeon;
+    bottom_room->add_enemy(fireball);
 
     GameManager* manager = new GameManager(dungeon, window);
     manager->start();

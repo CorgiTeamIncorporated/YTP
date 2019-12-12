@@ -1,13 +1,13 @@
 #include "AnimatedSprite.hpp"
 #include "Directions.hpp"
-#include "debug.hpp"
+// #include "debug.hpp"
 
 AnimatedSprite::AnimatedSprite(sf::Sprite* sprite, const AnimatedSpriteConfig* config) {
+    this->time_accumulator = sf::Time::Zero;
     this->last_direct = Directions::Down;
     this->sprite = sprite;
     this->config = config;
     this->frame_num = 0;
-    this->time_accumulator = sf::Time::Zero;
 
     if (config != nullptr)
         this->sprite->setTextureRect(config->down_moves.at(0));
