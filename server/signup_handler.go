@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"path"
 
+	"github.com/gorilla/csrf"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -133,6 +134,8 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = TemplateExecute(tpl, w, map[string]interface{}{
+		csrf.TemplateTag: csrf.TemplateField(r),
+
 		"errs": errs,
 
 		"login": login,

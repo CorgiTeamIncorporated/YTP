@@ -3,6 +3,7 @@
 		{{$element}}
 	{{end}}
 	<form method="POST" action="/signup">
+		{{.csrfField}}
 		<input type="text" name="login" value="{{.login}}">
 		<input type="password" name="password">
 		<button type="submit">

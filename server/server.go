@@ -9,6 +9,7 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/csrf"
 	"github.com/gorilla/mux"
 	"gopkg.in/boj/redistore.v1"
 )
@@ -42,6 +43,8 @@ func GetRouter() *http.ServeMux {
 
 	rt.HandleFunc("/api/key", KeyHandler).Methods(http.MethodGet, http.MethodPost)
 
+	rt.HandleFunc("/api/check", CheckHandler).Methods(http.MethodGet, http.MethodPost)
+
 	rt.HandleFunc("/login", LoginHandler).Methods(http.MethodGet, http.MethodPost)
 
 	rt.HandleFunc("/logout", LogoutHandler).Methods(http.MethodGet, http.MethodPost)
@@ -63,6 +66,8 @@ func TrimMiddleware(next http.Handler) http.Handler {
 		if r.URL.Path != "/" {
 			r.URL.Path = strings.TrimSuffix(r.URL.Path, "/")
 		}
+
+		w.Header().Set("X-CSRF-Token", csrf.Token(r))
 
 		next.ServeHTTP(w, r)
 	})
@@ -101,7 +106,23 @@ func InitServer() error {
 
 	scheme := HTTPScheme
 
-	Server = GetServer(TrimMiddleware(GetRouter()), ConfigInstance.Port)
+	secure := true
+
+	if !ConfigInstance.TLSEnabled && !ConfigInstance.TLSFake {
+		secure = false
+	}
+
+	csrfMiddleware := csrf.Protect(
+		[]byte(ConfigInstance.CSRFKey),
+		csrf.SameSite(csrf.SameSiteStrictMode),
+		csrf.CookieName("_csrf"),
+		csrf.FieldName("csrf_token"),
+		csrf.RequestHeader("CSRF-Token"),
+		csrf.ErrorHandler(http.HandlerFunc(HTTPForbiddenErrorHandler)),
+		csrf.Secure(secure),
+	)
+
+	Server = GetServer(csrfMiddleware(TrimMiddleware(GetRouter())), ConfigInstance.Port)
 
 	if ConfigInstance.TLSFake {
 		scheme = HTTPSScheme
@@ -112,10 +133,10 @@ func InitServer() error {
 
 		NonTLSServer = GetServer(NonTLSHandler{}, ConfigInstance.Port)
 
-		Server = GetServer(TrimMiddleware(GetRouter()), ConfigInstance.TLSPort)
+		Server = GetServer(csrfMiddleware(TrimMiddleware(GetRouter())), ConfigInstance.TLSPort)
 	}
 
-	if ParsedDomain, err = URLParse(scheme + "://" + ConfigInstance.Domain); err != nil {
+	if ParsedDomain, err = URLParse(scheme + "://" + ConfigInstance.Domain + ":" + strconv.Itoa(ConfigInstance.PortFake)); err != nil {
 		return err
 	}
 

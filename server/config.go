@@ -23,6 +23,8 @@ const MinPasswordLength = 8
 
 // ConfigInstance is the configuration instance.
 var ConfigInstance = Config{
+	CSRFKey: "32-byte-long-auth-key",
+
 	Domain: "localhost",
 
 	Host: "localhost",
@@ -36,6 +38,8 @@ var ConfigInstance = Config{
 	MySQLConnStr: "mysql:@/ydc",
 
 	Port: 3001,
+
+	PortFake: 3001,
 
 	ReadTimeout: 5,
 
@@ -62,6 +66,8 @@ var ConfigInstance = Config{
 
 // Config is the configuration type.
 type Config struct {
+	CSRFKey string `json:"csrf_key"`
+
 	// Config.Domain is the domain name used by the server. IP address may be also used here.
 	Domain string `json:"domain"`
 
@@ -82,6 +88,8 @@ type Config struct {
 
 	// Config.Port is the port to bind the server to.
 	Port int `json:"port"`
+
+	PortFake int `json:"port_fake"`
 
 	// Config.ReadTimeout is the timeout of reading a request in seconds.
 	ReadTimeout int64 `json:"read_timeout"`

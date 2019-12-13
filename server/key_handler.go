@@ -26,9 +26,7 @@ func KeyHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	key := hex.EncodeToString(bytes)
-
-	if _, err := w.Write([]byte(key)); err != nil {
+	if _, err := w.Write([]byte(hex.EncodeToString(bytes))); err != nil {
 		LogPrint(err)
 	}
 }

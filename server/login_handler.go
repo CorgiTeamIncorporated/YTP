@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"path"
 
+	"github.com/gorilla/csrf"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -17,6 +18,18 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	session, err := RediStore.Get(r, "ydc")
 
 	if err != nil {
+		LogPrint(err)
+
+		HTTPErrorHandler(w, http.StatusInternalServerError)
+
+		return
+	}
+
+	if r.FormValue("k") != "" {
+		session.Values["game_key"] = r.FormValue("k")
+	}
+
+	if err := session.Save(r, w); err != nil {
 		LogPrint(err)
 
 		HTTPErrorHandler(w, http.StatusInternalServerError)
@@ -111,6 +124,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = TemplateExecute(tpl, w, map[string]interface{}{
+		csrf.TemplateTag: csrf.TemplateField(r),
+
 		"errs": errs,
 
 		"login": login,

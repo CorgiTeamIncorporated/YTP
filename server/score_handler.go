@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"net/http"
 	"strconv"
 )
@@ -11,12 +12,12 @@ func ScoreHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("X-Content-Type-Options", "nosniff")
 
-	session, err := RediStore.Get(r, "ydc")
+	var id uint64
 
-	if err != nil {
-		LogPrint(err)
+	formKey := r.FormValue("k")
 
-		_, err = w.Write([]byte("err 500"))
+	if formKey == "" {
+		_, err := w.Write([]byte("err nil"))
 
 		if err != nil {
 			LogPrint(err)
@@ -25,8 +26,22 @@ func ScoreHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if _, ok := session.Values["user_id"]; !ok {
-		_, err := w.Write([]byte("err inv"))
+	err := DataBase.QueryRow("SELECT id FROM users WHERE game_key = ? LIMIT 1", formKey).Scan(&id)
+
+	if err == sql.ErrNoRows {
+		_, err := w.Write([]byte("err nil"))
+
+		if err != nil {
+			LogPrint(err)
+		}
+
+		return
+	}
+
+	if err != nil {
+		LogPrint(err)
+
+		_, err = w.Write([]byte("err 500"))
 
 		if err != nil {
 			LogPrint(err)
@@ -47,7 +62,7 @@ func ScoreHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err = DataBase.Query("UPDATE users SET score = ? WHERE id = ?", inInt, session.Values["user_id"])
+	_, err = DataBase.Query("UPDATE users SET score = ? WHERE id = ?", inInt, id)
 
 	if err != nil {
 		LogPrint(err)

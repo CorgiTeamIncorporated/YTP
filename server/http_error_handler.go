@@ -5,6 +5,11 @@ import (
 	"path"
 )
 
+// HTTPForbiddenErrorHandler handles the HTTP Forbidden error.
+func HTTPForbiddenErrorHandler(w http.ResponseWriter, _ *http.Request) {
+	HTTPErrorHandler(w, http.StatusForbidden)
+}
+
 // HTTPNotFoundErrorHandler handles the HTTP Not Found error.
 func HTTPNotFoundErrorHandler(w http.ResponseWriter, _ *http.Request) {
 	HTTPErrorHandler(w, http.StatusNotFound)
