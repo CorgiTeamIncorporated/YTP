@@ -5,10 +5,6 @@
 class Dungeon;
 
 class Unit {
-private:
-
-
-    // void attack_enemies();
 protected:
     unsigned short solid_height;
     signed short health;

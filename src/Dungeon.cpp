@@ -3,6 +3,12 @@
 #include <iostream>
 
 void Dungeon::render(sf::RenderWindow& window) {
+    if (player->killed()) {
+        window.clear();
+        window.draw(GameSprites::SplashScreen);
+        window.display(); return;
+    }
+
     // Drawing background
     for (const auto& v: current_room->map) {
         for (auto* object: v) {
@@ -42,8 +48,15 @@ void Dungeon::render(sf::RenderWindow& window) {
 }
 
 void Dungeon::adjust_sizes(sf::RenderWindow& window, sf::Event event) {
-    float real_height = current_room->height * tile_size;
-    float real_width = current_room->width * tile_size;
+    float real_height, real_width;
+
+    if (!player->killed()) {
+        real_height = current_room->height * tile_size;
+        real_width = current_room->width * tile_size;
+    } else {
+        real_height = GameSprites::SplashScreen.getGlobalBounds().height;
+        real_width = GameSprites::SplashScreen.getGlobalBounds().width;
+    }
 
     float width = event.size.width,
           height = event.size.height;
@@ -81,6 +94,8 @@ void Dungeon::update(sf::RenderWindow& window) {
         else
             handle_event(event);
 
+    if (player->killed()) return;
+
     player->move(delta);
 
     check_rooms();
@@ -95,9 +110,15 @@ void Dungeon::update(sf::RenderWindow& window) {
         }
     }
 
-    if (player->health < 0) {
-        // Here are some actions when player died
+    if (player->health <= 0) {
+        player->is_killed = true;
         player->health = 0;
+
+        event.type = sf::Event::Resized;
+        event.size.width = window.getSize().x;
+        event.size.height = window.getSize().y;
+
+        adjust_sizes(window, event);
     }
 
     unsigned short health_bar_height = health_bar->getTextureRect().height;
@@ -109,6 +130,8 @@ void Dungeon::update(sf::RenderWindow& window) {
 }
 
 void Dungeon::handle_event(sf::Event event) {
+    if (player->killed()) return;
+
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Space)
             attack_enemies();
