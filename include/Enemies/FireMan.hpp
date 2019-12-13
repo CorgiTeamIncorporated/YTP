@@ -6,7 +6,15 @@ private:
     bool is_throwing = false;
 public:
     FireMan(AnimatedSprite* sprite, Dungeon* dungeon = nullptr):
-        AbstractEnemy(sprite, dungeon) {};
+        AbstractEnemy(sprite, dungeon, 0.3) {
+            this->health = 200;
+        };
+
+    FireMan(Dungeon* dungeon = nullptr):
+        AbstractEnemy(new AnimatedSprite(
+            new sf::Sprite(GameSprites::FireMan), &FireManConfig), dungeon, 0.3) {
+                this->health = 200;
+            };
 
     void spawn_fireball(sf::Vector2f direction);
     void ai_move(sf::Time delta_time);

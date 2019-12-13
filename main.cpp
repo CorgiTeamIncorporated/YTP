@@ -39,53 +39,34 @@ void start_test_dungeon() {
     unsigned int width = 11, height = 9;
 
     sf::RenderWindow* window = new sf::RenderWindow(
-        sf::VideoMode(width * tile_size, height * tile_size), "Test window"
+        sf::VideoMode(width * tile_size, height * tile_size), "YDC (C) Corgi Industries, 2k19"
     );
 
     window->setFramerateLimit(60);
 
-    AnimatedSprite* zombie_sprite = new AnimatedSprite(
-        new sf::Sprite(GameSprites::Zombie), &ZombieConfig);
-    
-    AnimatedSprite* second_zombie_sprite = new AnimatedSprite(
-        new sf::Sprite(GameSprites::Zombie), &ZombieConfig);
-
     AnimatedSprite* player_sprite = new AnimatedSprite(
         new sf::Sprite(GameSprites::Player), &SkeletonConfig);
 
-    AnimatedSprite* spikes_sprite = new AnimatedSprite(
-        new sf::Sprite(GameSprites::Spikes), &SpikesConfig);
-
-    AnimatedSprite* fireball_sprite = new AnimatedSprite(
-        new sf::Sprite(GameSprites::FireBall), &FireBallConfig);
-
-    AnimatedSprite* fireman_sprite = new AnimatedSprite(
-        new sf::Sprite(GameSprites::FireMan), &FireManConfig);
-
-    Zombie* zombie = new Zombie(zombie_sprite);
-    zombie->set_speed(0.2);
+    Zombie* zombie = new Zombie();
     zombie->set_solid_height(32);
     zombie->get_sprite().setPosition(2 * tile_size, 2 * tile_size);
 
-    Zombie* second_zombie = new Zombie(second_zombie_sprite);
-    second_zombie->set_speed(0.2);
+    Zombie* second_zombie = new Zombie();
     second_zombie->set_solid_height(32);
     second_zombie->get_sprite().setPosition(5 * tile_size, 5 * tile_size);
 
     Unit* player = new Unit(player_sprite);
-    player->set_speed(0.5);
     player->set_solid_height(30);
     player->get_sprite().setPosition(tile_size, tile_size);
 
-    Spikes* spikes = new Spikes(spikes_sprite);
+    Spikes* spikes = new Spikes();
     spikes->get_sprite().setPosition(2 * tile_size, 2 * tile_size);
 
-    FireBall* fireball = new FireBall(fireball_sprite);
+    FireBall* fireball = new FireBall();
     fireball->get_sprite().setPosition(5 * tile_size, 5 * tile_size);
 
-    FireMan* fireman = new FireMan(fireman_sprite);
+    FireMan* fireman = new FireMan();
     fireman->get_sprite().setPosition(5 * tile_size, 5 * tile_size);
-    fireman->set_speed(0.3);
 
     GameRoom* main_room = get_test_room(height, width, tile_size);
     GameRoom* right_room = get_test_room(height, width, tile_size);
@@ -102,14 +83,12 @@ void start_test_dungeon() {
     dungeon->set_tile_size(tile_size);
 
     main_room->dungeon_ptr = dungeon;
-    // main_room->add_enemy(zombie);
-    // main_room->add_enemy(second_zombie);
+    main_room->add_enemy(zombie);
 
     right_room->dungeon_ptr = dungeon;
     right_room->add_enemy(spikes);
 
     bottom_room->dungeon_ptr = dungeon;
-    // bottom_room->add_enemy(fireball);
     bottom_room->add_enemy(fireman);
 
     GameManager* manager = new GameManager(dungeon, window);

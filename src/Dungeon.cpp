@@ -70,6 +70,9 @@ void Dungeon::adjust_sizes(sf::RenderWindow& window, sf::Event event) {
 void Dungeon::update(sf::RenderWindow& window) {
     sf::Event event;
 
+    sf::Time delta = timer.restart();
+    attack_accumulator += delta;
+
     while (window.pollEvent(event))
         if (event.type == sf::Event::Resized)
             adjust_sizes(window, event);
@@ -77,8 +80,6 @@ void Dungeon::update(sf::RenderWindow& window) {
             window.close();
         else
             handle_event(event);
-
-    sf::Time delta = timer.restart(); 
 
     player->move(delta);
 
@@ -109,6 +110,8 @@ void Dungeon::update(sf::RenderWindow& window) {
 
 void Dungeon::handle_event(sf::Event event) {
     if (event.type == sf::Event::KeyPressed) {
+        if (event.key.code == sf::Keyboard::Space)
+            attack_enemies();
         if (event.key.code == sf::Keyboard::W)
             player->direction = Directions::Up;
         else if (event.key.code == sf::Keyboard::A)
@@ -199,4 +202,30 @@ void Dungeon::check_rooms() {
 
 void Dungeon::attack_player(unsigned short damage) {
     player->health -= damage;
+}
+
+void Dungeon::attack_enemies() {
+    if (attack_accumulator < attack_reload_time) return;
+
+    attack_accumulator = sf::Time::Zero;
+
+    unsigned short player_damage = 10;
+    float radius = 40.f;
+
+    for (AbstractEnemy* enemy: current_room->enemies) {
+        sf::FloatRect enemy_bounds = enemy->get_solid_bounds();
+        sf::FloatRect player_bounds = player->get_solid_bounds();
+
+        float player_x = player_bounds.left + player_bounds.width / 2,
+              player_y = player_bounds.top + player_bounds.height / 2;
+
+        float enemy_x = enemy_bounds.left + enemy_bounds.width / 2,
+              enemy_y = enemy_bounds.top + enemy_bounds.height / 2;
+
+        float distance = std::min(abs(enemy_x - player_x), abs(enemy_y - player_y));
+
+        if (distance <= radius) {
+            enemy->health -= player_damage;
+        }
+    }
 }

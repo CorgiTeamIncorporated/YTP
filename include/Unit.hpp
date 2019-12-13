@@ -5,6 +5,10 @@
 class Dungeon;
 
 class Unit {
+private:
+
+
+    // void attack_enemies();
 protected:
     unsigned short solid_height;
     signed short health;
@@ -17,8 +21,8 @@ protected:
 public:
     sf::Vector2f direction;
 
-    Unit(AnimatedSprite* sprite, Dungeon* dungeon = nullptr):
-        sprite(sprite), dungeon_ptr(dungeon), health(100) {};
+    Unit(AnimatedSprite* sprite, Dungeon* dungeon = nullptr, float speed = 0.5):
+        sprite(sprite), dungeon_ptr(dungeon), health(100), speed(speed) {};
 
     void move(sf::Time delta);
 

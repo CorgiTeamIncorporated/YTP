@@ -7,6 +7,11 @@ public:
     FireBall(AnimatedSprite* sprite, Dungeon* dungeon = nullptr): 
         AbstractEnemy(sprite, dungeon), direction(Directions::Up) {};
 
+    FireBall(Dungeon* dungeon = nullptr):
+        AbstractEnemy(new AnimatedSprite(
+            new sf::Sprite(GameSprites::FireBall), &FireBallConfig), dungeon),
+        direction(Directions::Up) {};
+
     void set_direction(sf::Vector2f direction);
     void ai_move(sf::Time delta_time);
     sf::Vector2f direction;
