@@ -84,7 +84,11 @@ void Dungeon::update(sf::RenderWindow& window) {
 
     check_rooms();
 
-    for (AbstractEnemy* enemy: current_room->enemies) {
+    unsigned short vector_len = current_room->enemies.size();
+
+    for (int i = 0; i < vector_len; i++) {
+        AbstractEnemy* enemy = current_room->enemies[i];
+
         if (!enemy->killed()) {
             enemy->ai_move(delta);
         }

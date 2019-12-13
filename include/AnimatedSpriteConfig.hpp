@@ -68,3 +68,11 @@ const AnimatedSpriteConfig FireBallConfig = {
     1, sf::Time::Zero
 };
 */
+
+const AnimatedSpriteConfig FireManConfig = {
+    {sf::IntRect(0, 120, 90, 120), sf::IntRect(90, 120, 90, 120), sf::IntRect(180, 120, 90, 120)},
+    {sf::IntRect(0, 240, 90, 120), sf::IntRect(90, 240, 90, 120), sf::IntRect(180, 240, 90, 120)},
+    {sf::IntRect(0, 360, 90, 120), sf::IntRect(90, 360, 90, 120), sf::IntRect(180, 360, 90, 120)},
+    {sf::IntRect(0, 0, 90, 120), sf::IntRect(90, 0, 90, 120), sf::IntRect(180, 0, 90, 120)},
+    2, sf::milliseconds(100)
+};

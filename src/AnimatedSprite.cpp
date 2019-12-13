@@ -72,3 +72,17 @@ void AnimatedSprite::set_frame(unsigned short frame) {
 
     this->frame_num = frame;
 }
+
+void AnimatedSprite::set_direction(sf::Vector2f direction) {
+    this->last_direct = direction;
+
+    if (last_direct == Directions::Left) {
+        sprite->setTextureRect(config->left_moves.at(frame_num));
+    } else if (last_direct == Directions::Right) {
+        sprite->setTextureRect(config->right_moves.at(frame_num));
+    } else if (last_direct == Directions::Up) {
+        sprite->setTextureRect(config->up_moves.at(frame_num));
+    } else {
+        sprite->setTextureRect(config->down_moves.at(frame_num));
+    }
+}

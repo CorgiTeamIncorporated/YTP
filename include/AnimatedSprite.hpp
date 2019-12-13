@@ -16,6 +16,7 @@ public:
     sf::FloatRect get_bounds();
     sf::Sprite& get_sprite();
 
+    void set_direction(sf::Vector2f direction);
     void set_position(sf::Vector2f position);
     void set_frame(unsigned short frame);
     sf::Vector2f get_position();

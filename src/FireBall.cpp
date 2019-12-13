@@ -74,5 +74,6 @@ void FireBall::ai_move(sf::Time delta_time) {
 }
 
 void FireBall::set_direction(sf::Vector2f direction) {
+    sprite->set_direction(direction);
     this->direction = direction;
 }
