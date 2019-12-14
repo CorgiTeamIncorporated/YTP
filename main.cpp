@@ -1,13 +1,13 @@
 #include "GameRoom.hpp"
+#include "MapBuilder.hpp"
 #include "GameSprites.hpp"
 #include "GameManager.hpp"
 #include "Enemies/Zombie.hpp"
 #include "Enemies/Spikes.hpp"
 #include "Enemies/FireBall.hpp"
-#include "Enemies/FireMan.hpp"
 #include <vector>
 
-GameRoom* get_test_room(unsigned int height, unsigned int width, unsigned int tile_size) {
+/*GameRoom* get_test_room(unsigned int height, unsigned int width, unsigned int tile_size) {
     GameRoom* room = new GameRoom;
 
     room->set_map(std::vector<std::vector<MapObject*>>(
@@ -33,6 +33,15 @@ GameRoom* get_test_room(unsigned int height, unsigned int width, unsigned int ti
 
     return room;
 }
+*/
+
+GameRoom* get_test_room(Dungeon* dungeon) {
+    MapBuilder* mapBuilder = new MapBuilder(10, 20, dungeon);
+    mapBuilder->buildMap();
+    GameRoom* room = mapBuilder->getStartRoom();
+
+    return room;
+}
 
 void start_test_dungeon() {
     unsigned int tile_size = 100;
@@ -46,8 +55,21 @@ void start_test_dungeon() {
 
     AnimatedSprite* player_sprite = new AnimatedSprite(
         new sf::Sprite(GameSprites::Player), &SkeletonConfig);
+    /*
+    AnimatedSprite* zombie_sprite = new AnimatedSprite(
+        new sf::Sprite(GameSprites::Zombie), &ZombieConfig);
+    
+    AnimatedSprite* second_zombie_sprite = new AnimatedSprite(
+        new sf::Sprite(GameSprites::Zombie), &ZombieConfig);
 
-    Zombie* zombie = new Zombie();
+    AnimatedSprite* spikes_sprite = new AnimatedSprite(
+        new sf::Sprite(GameSprites::Spikes), &SpikesConfig);
+
+    AnimatedSprite* fireball_sprite = new AnimatedSprite(
+        new sf::Sprite(GameSprites::FireBall), &FireBallConfig);
+
+    Zombie* zombie = new Zombie(zombie_sprite);
+    zombie->set_speed(0.2);
     zombie->set_solid_height(32);
     zombie->get_sprite().setPosition(2 * tile_size, 2 * tile_size);
 
@@ -55,42 +77,46 @@ void start_test_dungeon() {
     second_zombie->set_solid_height(32);
     second_zombie->get_sprite().setPosition(5 * tile_size, 5 * tile_size);
 
-    Unit* player = new Unit(player_sprite);
-    player->set_solid_height(30);
-    player->get_sprite().setPosition(tile_size, tile_size);
-
-    Spikes* spikes = new Spikes();
+    Spikes* spikes = new Spikes(spikes_sprite);
     spikes->get_sprite().setPosition(2 * tile_size, 2 * tile_size);
 
     FireBall* fireball = new FireBall();
     fireball->get_sprite().setPosition(5 * tile_size, 5 * tile_size);
+    */
 
-    FireMan* fireman = new FireMan();
-    fireman->get_sprite().setPosition(5 * tile_size, 5 * tile_size);
+    Unit* player = new Unit(player_sprite);
+    player->set_speed(0.5);
+    player->set_solid_height(30);
+    player->get_sprite().setPosition(tile_size, tile_size);
+    
+    Dungeon* dungeon = new Dungeon;
 
-    GameRoom* main_room = get_test_room(height, width, tile_size);
+    GameRoom* main_room = get_test_room(dungeon);
+    /* GameRoom* main_room = get_test_room(height, width, tile_size);
     GameRoom* right_room = get_test_room(height, width, tile_size);
     GameRoom* bottom_room = get_test_room(height, width, tile_size);
 
     main_room->set_right_room(right_room);
     right_room->set_left_room(main_room);
     main_room->set_bottom_room(bottom_room);
-    bottom_room->set_top_room(main_room);
+    bottom_room->set_top_room(main_room); 
+    */
 
-    Dungeon* dungeon = new Dungeon;
     dungeon->set_player(player);
     dungeon->set_room(main_room);
     dungeon->set_tile_size(tile_size);
 
+    /*
     main_room->dungeon_ptr = dungeon;
     main_room->add_enemy(zombie);
-
+    main_room->add_enemy(second_zombie);
+        
     right_room->dungeon_ptr = dungeon;
     right_room->add_enemy(spikes);
 
     bottom_room->dungeon_ptr = dungeon;
-    bottom_room->add_enemy(fireman);
-
+    bottom_room->add_enemy(fireball);
+    */
     GameManager* manager = new GameManager(dungeon, window);
     manager->start();
 }

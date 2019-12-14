@@ -100,11 +100,7 @@ void Dungeon::update(sf::RenderWindow& window) {
 
     check_rooms();
 
-    unsigned short vector_len = current_room->enemies.size();
-
-    for (int i = 0; i < vector_len; i++) {
-        AbstractEnemy* enemy = current_room->enemies[i];
-
+    for (AbstractEnemy* enemy: current_room->enemies) {
         if (!enemy->killed()) {
             enemy->ai_move(delta);
         }
@@ -203,8 +199,8 @@ void Dungeon::check_rooms() {
     sf::FloatRect left(0, ver_middle, tile_size, tile_size);
     sf::FloatRect right(right_side, ver_middle, tile_size, tile_size);
     sf::FloatRect bottom(hor_middle, bottom_side, tile_size, tile_size);
-
     // Check if player intersects any door
+
     sf::FloatRect solid_bounds = player->get_solid_bounds();
     sf::FloatRect player_bounds = player->get_bounds();
 
@@ -222,6 +218,56 @@ void Dungeon::check_rooms() {
         player->set_position(sf::Vector2f(left.left + tile_size, player_bounds.top));
     }
 }
+
+/*
+ void Dungeon::check_rooms() {
+    // This function checks if player intersects any door
+    // In that case, function will replace
+    // the room pointer with another one
+
+    //Upper left corner room coordinates
+    float coord_x = current_room->map[0][0]->background.getPosition().x;
+    float coord_y = current_room->map[0][0]->background.getPosition().y;
+
+    // Getting boundaries of each door
+    float hor_middle = (current_room->width / 2) * tile_size + coord_x;
+    float ver_middle = (current_room->height / 2) * tile_size + coord_y;
+    float right_side = (current_room->width - 1) * tile_size + coord_x;
+    float bottom_side = (current_room->height - 1) * tile_size + coord_y;
+
+    sf::FloatRect up(hor_middle, coord_y, tile_size, tile_size);
+    sf::FloatRect left(coord_x, ver_middle, tile_size, tile_size);
+    sf::FloatRect right(right_side, ver_middle, tile_size, tile_size);
+    sf::FloatRect bottom(hor_middle, bottom_side, tile_size, tile_size);
+    // Check if player intersects any door
+
+    sf::FloatRect solid_bounds = player->get_solid_bounds();
+    sf::FloatRect player_bounds = player->get_bounds();
+
+    if (current_room->up != nullptr && up.intersects(solid_bounds)) {
+        current_room = current_room->up;
+        player->set_position(sf::Vector2f(player_bounds.left, player_bounds.top - 2*tile_size));
+        view.setCenter(hor_middle + tile_size/2, ver_middle - current_room->height*tile_size+ tile_size/2);
+
+    } else if (current_room->down != nullptr && bottom.intersects(solid_bounds)) {
+        current_room = current_room->down;
+        player->set_position(sf::Vector2f(player_bounds.left, player_bounds.top + 2*tile_size));
+        view.setCenter(hor_middle + tile_size/2, ver_middle + current_room->height*tile_size + tile_size/2);
+
+    } else if (current_room->left != nullptr && left.intersects(solid_bounds)) {
+        current_room = current_room->left;
+        player->set_position(sf::Vector2f(player_bounds.left - 2*tile_size, player_bounds.top));
+        view.setCenter(hor_middle - current_room->width*tile_size + tile_size/2, ver_middle + tile_size/2);
+
+    } else if (current_room->right != nullptr && right.intersects(solid_bounds)) {
+        current_room = current_room->right;
+        player->set_position(sf::Vector2f(player_bounds.left + 2*tile_size, player_bounds.top));
+        view.setCenter(hor_middle + current_room->width*tile_size + tile_size/2, ver_middle + tile_size/2);
+
+    }
+    view.setSize(current_room->width*tile_size, current_room->height*tile_size);
+}
+*/
 
 void Dungeon::attack_player(unsigned short damage) {
     player->health -= damage;
