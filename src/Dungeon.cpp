@@ -182,6 +182,8 @@ void Dungeon::preload(sf::RenderWindow& window) {
         current_room->height * tile_size
     ), "YDC (C) Corgi Industries, 2k19");
 
+    window.setFramerateLimit(60);
+
     sf::VideoMode screen_size = sf::VideoMode::getDesktopMode();
 
     window.setPosition(sf::Vector2i(
