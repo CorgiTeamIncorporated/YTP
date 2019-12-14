@@ -50,6 +50,7 @@ func GetRouter() *http.ServeMux {
 	rt.Handle("/robots.txt", FileHandler{"/robots.txt"})
 
 	rt.HandleFunc("/", IndexHandler).Methods(http.MethodGet)
+	rt.HandleFunc("/api/getscore", GetScoreHandler).Methods(http.MethodGet, http.MethodPost)
 	rt.HandleFunc("/api/score", ScoreHandler).Methods(http.MethodGet, http.MethodPost)
 	rt.HandleFunc("/api/key", KeyHandler).Methods(http.MethodGet, http.MethodPost)
 	rt.HandleFunc("/api/check", CheckHandler).Methods(http.MethodGet, http.MethodPost)
