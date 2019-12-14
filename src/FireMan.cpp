@@ -5,6 +5,11 @@
 #include "Directions.hpp"
 
 void FireMan::ai_move(sf::Time delta_time) {
+    if (health <= 0) {
+        dungeon_ptr->score += 5;
+        is_killed = true; return;
+    }
+
     accumulator += delta_time;
 
     this->direction = Directions::NullDirection;

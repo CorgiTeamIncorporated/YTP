@@ -1,11 +1,10 @@
 #include "Scenes/Dungeon.hpp"
+#include "SFML/Network.hpp"
 #include "GameSprites.hpp"
 #include <iostream>
 #include <string>
 
 void Dungeon::render(sf::RenderWindow& window) {
-    // window.clear();
-
     if (player->killed()) {
         window.clear();
         window.draw(GameSprites::SplashScreen);
@@ -42,9 +41,13 @@ void Dungeon::render(sf::RenderWindow& window) {
         }
     }
 
-    // Drawing health bar
+    // Drawing health bar and score
     window.draw(*health_outline);
     window.draw(*health_bar);
+
+    window.draw(score_background);
+    window.draw(label);
+    window.draw(score_text);
 
     // Saving changes on the screen
     window.display();
@@ -113,6 +116,8 @@ void Dungeon::update(sf::RenderWindow& window) {
         }
     }
 
+    score_text.setString(std::to_string(score));
+
     if (player->health <= 0) {
         player->is_killed = true;
         player->health = 0;
@@ -120,6 +125,14 @@ void Dungeon::update(sf::RenderWindow& window) {
         event.type = sf::Event::Resized;
         event.size.width = window.getSize().x;
         event.size.height = window.getSize().y;
+
+        if (!offline_mode) {
+            sf::Http::Request request("/api/score?k=" + login_token + 
+                                      "&i=" + std::to_string(score));
+
+            sf::Http http("http://ydc.exp101t.me");
+            http.sendRequest(request);
+        }
 
         adjust_sizes(window, event);
     }
@@ -200,6 +213,27 @@ void Dungeon::preload(sf::RenderWindow& window) {
     health_bar->setPosition(
         health_outline->getPosition() + sf::Vector2f(36, 8)
     );
+
+    font.loadFromFile("Roboto-Regular.ttf");
+    
+    label.setString("Your score is:");
+    label.setFont(font);
+    label.setCharacterSize(35);
+    label.setPosition(sf::Vector2f(0, 0));
+    label.setColor(sf::Color::Black);
+
+    sf::FloatRect bounds = label.getGlobalBounds();
+
+    score_text.setFont(font);
+    score_text.setCharacterSize(35);
+    score_text.setPosition(sf::Vector2f(bounds.left + bounds.width + 20, 0));
+    score_text.setColor(sf::Color::Black);
+
+    score_background.setFillColor(sf::Color::White);
+    score_background.setOutlineColor(sf::Color::White);
+    score_background.setOutlineThickness(2);
+    score_background.setPosition(sf::Vector2f(0, 0));
+    score_background.setSize(sf::Vector2f(300, 40));
 }
 
 void Dungeon::set_tile_size(unsigned int size) {

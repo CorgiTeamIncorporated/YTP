@@ -3,6 +3,7 @@
 
 void Zombie::ai_move(sf::Time delta_time) {
     if (health <= 0) {
+        dungeon_ptr->score += 1;
         is_killed = true; return;
     }
 

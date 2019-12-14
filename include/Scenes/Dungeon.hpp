@@ -21,6 +21,13 @@ private:
 
     std::string login_token = "DEADBEEF";
     bool offline_mode = true;
+
+    sf::RectangleShape score_background;
+    sf::Text score_text;
+    sf::Text label;
+    sf::Font font;
+
+    unsigned short score = 0;
 public:
     void adjust_sizes(sf::RenderWindow& window, sf::Event event);
     void attack_player(unsigned short damage);
