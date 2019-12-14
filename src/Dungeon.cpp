@@ -1,8 +1,11 @@
 #include "Scenes/Dungeon.hpp"
 #include "GameSprites.hpp"
 #include <iostream>
+#include <string>
 
 void Dungeon::render(sf::RenderWindow& window) {
+    // window.clear();
+
     if (player->killed()) {
         window.clear();
         window.draw(GameSprites::SplashScreen);
@@ -172,6 +175,19 @@ void Dungeon::set_room(GameRoom* room) {
 }
 
 void Dungeon::preload(sf::RenderWindow& window) {
+    window.clear();
+
+    window.create(sf::VideoMode(
+        current_room->width * tile_size,
+        current_room->height * tile_size
+    ), "YDC (C) Corgi Industries, 2k19");
+
+    sf::VideoMode screen_size = sf::VideoMode::getDesktopMode();
+
+    window.setPosition(sf::Vector2i(
+        (screen_size.width - current_room->width * tile_size) / 2,
+        (screen_size.height - current_room->height * tile_size) / 2));
+
     health_bar = &GameSprites::HealthBar;
     health_outline = &GameSprites::HealthOutline;
 
@@ -251,4 +267,9 @@ void Dungeon::attack_enemies() {
             enemy->health -= player_damage;
         }
     }
+}
+
+void Dungeon::set_login_token(std::string token) {
+    offline_mode = false;
+    login_token = token;
 }

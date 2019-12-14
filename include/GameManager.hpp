@@ -7,5 +7,6 @@ private:
     AbstractScene* scene;
 public:
     GameManager(AbstractScene* scene, sf::RenderWindow* window);
+    void set_scene(AbstractScene* scene);
     void start();
 };

@@ -15,6 +15,11 @@ struct GameRoom {
     unsigned short width, height;
     unsigned short block_size;
 
+    GameRoom(unsigned short width, unsigned short height, Dungeon* dungeon);
+
+    void generate_map();
+    void set_position(int x, int y);
+    void set_position();
     void set_map(std::vector<std::vector<MapObject*>> map);
     void add_enemy(AbstractEnemy* enemy);
 

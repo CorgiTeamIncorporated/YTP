@@ -3,7 +3,7 @@
 namespace GameTextures {
     sf::Texture Grass, Stone, Player, Spikes, Zombie, Wall,
                 HealthBar, HealthOutline, Door, FireBall, FireMan,
-                SplashScreen;
+                SplashScreen, BlackHole;
 }
 
 void GameTextures::init_textures() {
@@ -19,4 +19,5 @@ void GameTextures::init_textures() {
     FireBall.loadFromFile("textures/fireball.png");
     FireMan.loadFromFile("textures/fireman.png");
     SplashScreen.loadFromFile("textures/splash.png");
+    BlackHole.loadFromFile("textures/blackhole.png");
 }

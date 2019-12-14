@@ -4,7 +4,7 @@
 namespace GameTextures {
     extern sf::Texture Grass, Stone, Player, Spikes, Zombie, Wall,
                        HealthBar, HealthOutline, Door, FireBall, FireMan,
-                       SplashScreen;
+                       SplashScreen, BlackHole;
 
     extern void init_textures();
 };
