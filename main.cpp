@@ -53,14 +53,14 @@ void start_test_dungeon() {
 
     window->setFramerateLimit(60);
 
+    AnimatedSprite* player_sprite = new AnimatedSprite(
+        new sf::Sprite(GameSprites::Player), &SkeletonConfig);
+    /*
     AnimatedSprite* zombie_sprite = new AnimatedSprite(
         new sf::Sprite(GameSprites::Zombie), &ZombieConfig);
     
     AnimatedSprite* second_zombie_sprite = new AnimatedSprite(
         new sf::Sprite(GameSprites::Zombie), &ZombieConfig);
-
-    AnimatedSprite* player_sprite = new AnimatedSprite(
-        new sf::Sprite(GameSprites::Player), &SkeletonConfig);
 
     AnimatedSprite* spikes_sprite = new AnimatedSprite(
         new sf::Sprite(GameSprites::Spikes), &SpikesConfig);
@@ -78,17 +78,18 @@ void start_test_dungeon() {
     second_zombie->set_solid_height(32);
     second_zombie->get_sprite().setPosition(5 * tile_size, 5 * tile_size);
 
-    Unit* player = new Unit(player_sprite);
-    player->set_speed(0.5);
-    player->set_solid_height(30);
-    player->get_sprite().setPosition(tile_size, tile_size);
-
     Spikes* spikes = new Spikes(spikes_sprite);
     spikes->get_sprite().setPosition(2 * tile_size, 2 * tile_size);
 
     FireBall* fireball = new FireBall(fireball_sprite);
     fireball->get_sprite().setPosition(5 * tile_size, 5 * tile_size);
+    */
 
+    Unit* player = new Unit(player_sprite);
+    player->set_speed(0.5);
+    player->set_solid_height(30);
+    player->get_sprite().setPosition(tile_size, tile_size);
+    
     Dungeon* dungeon = new Dungeon;
 
     GameRoom* main_room = get_test_room(dungeon);
@@ -106,11 +107,12 @@ void start_test_dungeon() {
     dungeon->set_room(main_room);
     dungeon->set_tile_size(tile_size);
 
+    /*
     main_room->dungeon_ptr = dungeon;
     main_room->add_enemy(zombie);
     main_room->add_enemy(second_zombie);
-
-    /* right_room->dungeon_ptr = dungeon;
+        
+    right_room->dungeon_ptr = dungeon;
     right_room->add_enemy(spikes);
 
     bottom_room->dungeon_ptr = dungeon;

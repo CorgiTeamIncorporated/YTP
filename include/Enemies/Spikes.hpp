@@ -6,6 +6,10 @@ public:
     Spikes(AnimatedSprite* sprite, Dungeon* dungeon = nullptr): 
         AbstractEnemy(sprite, dungeon) {};
 
+    Spikes():
+        AbstractEnemy(new AnimatedSprite(
+            new sf::Sprite(GameSprites::Spikes), &SpikesConfig)) {};
+
     void ai_move(sf::Time delta_time);
     void make_visible();
 

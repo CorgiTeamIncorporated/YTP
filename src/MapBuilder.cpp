@@ -1,14 +1,15 @@
 #include "MapBuilder.hpp"
 
 MapBuilder::MapBuilder(unsigned short roomQuantityMin, unsigned short roomQuantityMax, Dungeon* dungeon){
-    this->roomQuantity = std::rand() % (roomQuantityMax - roomQuantityMin) + roomQuantityMin;
+    auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    mt_rand.seed(seed);
+    
+    this->roomQuantity = mt_rand() % (roomQuantityMax - roomQuantityMin) + roomQuantityMin;
     this->startRoom = new GameRoom(ROOM_LENGTH, ROOM_HEIGHT, dungeon);
     this->dungeon=dungeon;
 }
 
 void MapBuilder::generateConnectionsGraph(){
-    auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-    std::mt19937 mt_rand(seed);
     unsigned short backboneRoomsQuantity = roomQuantity*60/100;
     unsigned short extraRoomsQuantity = roomQuantity - backboneRoomsQuantity;
     connectionsGraph = std::vector<std::vector<unsigned short>>(
@@ -220,12 +221,109 @@ void MapBuilder::setPosition(GameRoom* room, std::vector<GameRoom*> &used){
     }
 }
 
+void MapBuilder::addEnemies(){
+    unsigned short enemy_type;
+    unsigned short enemy_quantity;
+    unsigned int tile_size = 100;
+
+    unsigned short surprise;
+
+    for(int i = 1; i < roomQuantity; i++){
+        enemy_type = mt_rand()%2;
+        surprise = mt_rand()%5;
+        
+        switch (enemy_type)
+        {
+        case 0:
+            enemy_quantity = mt_rand() % 7 + 1;
+            int x, y;
+            for(int j = 0; j <enemy_quantity; j++){
+                Zombie* zombie = new Zombie();
+                zombie->set_solid_height(32);
+                zombie->set_speed((mt_rand()%3+1)*0.1);
+                int x = mt_rand()%(ROOM_LENGTH-4) + 2;
+                int y = mt_rand()%(ROOM_HEIGHT-4) + 2;
+                zombie->get_sprite().setPosition(x * tile_size, y * tile_size);
+                rooms[i]->add_enemy(zombie);
+            }
+            break;
+        case 1:
+            enemy_quantity = mt_rand() % 3 + 1;
+            for(int j = 0; j <enemy_quantity; j++){
+                FireMan* fireman = new FireMan();
+                fireman->set_solid_height(32);
+                fireman->set_speed(0.2);
+                int x = mt_rand()%(ROOM_LENGTH-4) + 2;
+                int y = mt_rand()%(ROOM_HEIGHT-4) + 2;
+                fireman->get_sprite().setPosition(x * tile_size, y * tile_size);
+                rooms[i]->add_enemy(fireman);
+            }
+            break;
+        }
+
+        if(surprise == 1){
+            enemy_quantity = mt_rand() % 8 + 1;
+            int x, y;
+            for(int j = 0; j <enemy_quantity; j++){
+                Spikes* spikes = new Spikes();
+                spikes->set_solid_height(32);
+                int x = mt_rand()%(ROOM_LENGTH-3) + 1;
+                int y = mt_rand()%(ROOM_HEIGHT-3) + 1;
+                spikes->get_sprite().setPosition(x * tile_size, y * tile_size);
+                rooms[i]->add_enemy(spikes);
+            }
+        }
+    }
+}
+
 void MapBuilder::buildMap() {
     this->generateConnectionsGraph();
     this->connectRooms();
     std::vector<GameRoom*>used;
     this->setPosition(startRoom, used);
+    this->addEnemies();
 }
+
+/*std::pair<unsigned short, unsigned short> MapBuilder::findFarestRoom(){
+    unsigned short x = 0;
+    unsigned short y = 0;
+    unsigned short max = 0;
+
+    std::vector<std::vector<unsigned short>> waysGraph = std::vector<std::vector<unsigned short>>(
+        roomQuantity*2+1, std::vector<unsigned short>(roomQuantity*2+1, USHRT_MAX)
+    );
+
+    findFarestRoomHelper(waysGraph, roomQuantity, roomQuantity, 0);
+
+    for(int i = 0;i <roomQuantity*2+1; i++){
+        for(int j = 0; j <roomQuantity*2+1;j++){
+            if(waysGraph[i][j] != USHRT_MAX && waysGraph[i][j] > max){
+                max = waysGraph[i][j];
+                y = i;
+                x = j;
+            }
+        }
+    }
+
+    return {y, x};
+}
+
+void MapBuilder::findFarestRoomHelper(std::vector<std::vector<unsigned short>> &waysGraph, unsigned short i, unsigned short j, unsigned short count = 0){
+    waysGraph[i][j] = count;
+    if(connectionsGraph[i+1][j]!=USHRT_MAX && waysGraph[i+1][j] == USHRT_MAX){
+        findFarestRoomHelper(waysGraph, i+1, j, count++);
+    }
+    if(connectionsGraph[i-1][j]!=USHRT_MAX && waysGraph[i-1][j] == USHRT_MAX){
+        findFarestRoomHelper(waysGraph, i-1, j, count++);
+    }
+    if(connectionsGraph[i][j+1]!=USHRT_MAX && waysGraph[i][j+1] == USHRT_MAX){
+        findFarestRoomHelper(waysGraph, i, j+1, count++);
+    }
+    if(connectionsGraph[i][j-1]!=USHRT_MAX && waysGraph[i][j-1] == USHRT_MAX){
+        findFarestRoomHelper(waysGraph, i, j-1, count++);
+    }
+}
+*/
 
 GameRoom* MapBuilder::getStartRoom() {
     return startRoom;
