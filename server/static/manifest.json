@@ -1,0 +1,14 @@
+{
+	"background_color": "#9f61af",
+	"display": "standalone",
+	"name": "ydc",
+	"short_name": "ydc",
+	"theme_color": "#9f61af",
+	"icons": [
+		{
+			"src": "/assets/images/skeleton.png",
+			"sizes": "32x32",
+			"type": "image/png"
+		}
+	]
+}

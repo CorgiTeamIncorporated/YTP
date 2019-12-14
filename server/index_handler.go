@@ -51,7 +51,67 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = TemplateExecute(tpl, w, nil)
+	login := ""
+
+	var score uint64 = 0
+
+	if authenticated {
+		err = DataBase.QueryRow("SELECT login, score FROM users WHERE id = ? LIMIT 1", session.Values["user_id"]).Scan(&login, &score)
+
+		if err != nil {
+			LogPrint(err)
+
+			HTTPErrorHandler(w, http.StatusInternalServerError)
+
+			return
+		}
+	}
+
+	topLogins := []string{}
+
+	topScores := []uint64{}
+
+	rs, err := DataBase.Query("SELECT login, score FROM users ORDER BY score DESC LIMIT 10")
+
+	if err != nil {
+		LogPrint(err)
+
+		HTTPErrorHandler(w, http.StatusInternalServerError)
+
+		return
+	}
+
+	for rs.Next() {
+		lgn := ""
+
+		var scr uint64 = 0
+
+		if err := rs.Scan(&lgn, &scr); err != nil {
+			LogPrint(err)
+
+			HTTPErrorHandler(w, http.StatusInternalServerError)
+
+			return
+		}
+
+		topLogins = append(topLogins, lgn)
+
+		topScores = append(topScores, scr)
+	}
+
+	rs.Close()
+
+	err = TemplateExecute(tpl, w, map[string]interface{}{
+		"logged_in": authenticated,
+
+		"login": login,
+
+		"score": score,
+
+		"top_logins": topLogins,
+
+		"top_scores": topScores,
+	})
 
 	if err != nil {
 		LogPrint(err)

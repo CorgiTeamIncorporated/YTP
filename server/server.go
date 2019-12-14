@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"net/http"
 	"net/url"
+	"path"
 	"strconv"
 	"strings"
 	"time"
@@ -29,6 +30,11 @@ var RediStore *redistore.RediStore
 // Server is the main server instance.
 var Server *http.Server
 
+// FileHandler is the single static file handler type.
+type FileHandler struct {
+	Path string
+}
+
 // GetRouter gets a new main server router.
 func GetRouter() *http.ServeMux {
 	httpRT := http.NewServeMux()
@@ -37,27 +43,48 @@ func GetRouter() *http.ServeMux {
 
 	rt.StrictSlash(false)
 
+	rt.Handle("/browserconfig.xml", FileHandler{"/browserconfig.xml"})
+	rt.Handle("/crossdomain.xml", FileHandler{"/crossdomain.xml"})
+	rt.Handle("/manifest.json", FileHandler{"/manifest.json"})
+	rt.Handle("/sitemap.xml", FileHandler{"/sitemap.xml"})
+	rt.Handle("/robots.txt", FileHandler{"/robots.txt"})
+
 	rt.HandleFunc("/", IndexHandler).Methods(http.MethodGet)
-
 	rt.HandleFunc("/api/score", ScoreHandler).Methods(http.MethodGet, http.MethodPost)
-
 	rt.HandleFunc("/api/key", KeyHandler).Methods(http.MethodGet, http.MethodPost)
-
 	rt.HandleFunc("/api/check", CheckHandler).Methods(http.MethodGet, http.MethodPost)
-
 	rt.HandleFunc("/login", LoginHandler).Methods(http.MethodGet, http.MethodPost)
-
 	rt.HandleFunc("/logout", LogoutHandler).Methods(http.MethodGet, http.MethodPost)
-
 	rt.HandleFunc("/signup", SignupHandler).Methods(http.MethodGet, http.MethodPost)
-
-	rt.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
+	rt.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", FileServer(http.Dir("assets")))).Methods(http.MethodGet)
 
 	rt.NotFoundHandler = http.HandlerFunc(HTTPNotFoundErrorHandler)
 
 	httpRT.Handle("/", rt)
 
 	return httpRT
+}
+
+// FileHandler.ServeHTTP serves the root static file.
+func (f FileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, path.Join("static", f.Path))
+}
+
+// FileServer serves the static files.
+func FileServer(fs http.FileSystem) http.Handler {
+	h := http.FileServer(fs)
+
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		v, err := Exists(path.Join("assets", path.Clean(r.URL.Path)))
+
+		if err != nil || !v {
+			HTTPNotFoundErrorHandler(w, r)
+
+			return
+		}
+
+		h.ServeHTTP(w, r)
+	})
 }
 
 // TrimMiddleware trims trailing slashes from URIs.

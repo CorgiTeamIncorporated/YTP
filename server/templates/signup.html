@@ -1,13 +1,71 @@
 {{define "content"}}
-	{{range $element := .errs}}
-		{{$element}}
-	{{end}}
-	<form method="POST" action="/signup">
+	<form class="narrow" method="POST" action="/signup">
 		{{.csrfField}}
-		<input type="text" name="login" value="{{.login}}">
-		<input type="password" name="password">
-		<button type="submit">
-			<span>Submit</span>
-		</button>
+
+		{{range $element := .errs}}
+			<div class="element-wrap">
+				<div class="error">
+					{{if eq $element "login_absent"}}
+						Отсутствует необходимое поле имени пользователя.
+					{{end}}
+					{{if eq $element "login_too_short"}}
+						Имя пользователя слишком короткое, оно должно быть хотя бы 5 символов.
+					{{end}}
+					{{if eq $element "login_too_long"}}
+						Имя пользователя слишком длинное, оно должно быть не более 128 символов.
+					{{end}}
+					{{if eq $element "login_exists"}}
+						Пользователь с таким именем уже существует.
+					{{end}}
+					{{if eq $element "password_absent"}}
+						Отсутствует необходимое поле пароля.
+					{{end}}
+					{{if eq $element "password_too_short"}}
+						Пароль слишком короткий, он должен быть хотя бы 8 символов.
+					{{end}}
+					{{if eq $element "password_too_long"}}
+						Пароль слишком длинный, он должен быть не более 71 символов.
+					{{end}}
+				</div>
+			</div>
+		{{end}}
+
+		<div class="element-wrap">
+			<div class="label">Имя пользователя</div>
+		</div>
+
+		<div class="element-wrap">
+			<input class="full-block" type="text" name="login" value="{{.login}}"
+				autocapitalize="none"
+				autocomplete="off"
+				autocorrect="off"
+				spellcheck="false">
+		</div>
+
+		<div class="element-wrap">
+			<div class="label">Пароль</div>
+		</div>
+
+		<div class="element-wrap">
+			<input class="full-block" type="password" name="password"
+				autocapitalize="none"
+				autocomplete="off"
+				autocorrect="off"
+				spellcheck="false">
+		</div>
+
+		<div class="element-wrap">
+			<button class="full-block" type="submit">
+				<span>Зарегистрироваться</span>
+			</button>
+		</div>
 	</form>
+{{end}}
+
+{{define "content-header"}}
+	{{template "header" .}}
+{{end}}
+
+{{define "content-footer"}}
+	{{template "footer" .}}
 {{end}}

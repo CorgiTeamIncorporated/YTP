@@ -1,3 +1,54 @@
+{{define "header"}}
+	<div class="header-wrapper">
+		<div class="header-wrapper-fixed">
+			<div class="header-container">
+				<div class="float-left element-wrap header-logo-wrap">
+					<a href="/">
+						<img class="header-logo" src="/assets/skeleton.png">
+					</a>
+				</div>
+				<div class="float-right">
+					{{if .logged_in}}
+						<span class="header-text element-wrap">
+								Привет, {{.login}}!
+						</span>
+						<span class="element-wrap">
+							<a class="button" href="/logout">
+								Выйти
+							</a>
+						</span>
+					{{else}}
+						<span class="element-wrap">
+							<a class="button" href="/login">
+								Войти
+							</a>
+						</span>
+						<span class="element-wrap">
+							<a class="button" href="/signup">
+								Зарегистрироваться
+							</a>
+						</span>
+					{{end}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="header-space"></div>
+{{end}}
+
+{{define "footer"}}
+	<div class="footer-wrapper">
+		<div class="footer-container">
+		</div>
+	</div>
+{{end}}
+
+{{define "content-header"}}
+{{end}}
+
+{{define "content-footer"}}
+{{end}}
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -6,10 +57,18 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="/assets/app.css">
-		<title>Test title</title>
+		<link rel="shortcut icon" href="/assets/skeleton.png">
+		<link rel="icon" href="/assets/skeleton.png" sizes="32x32">
+		<title>Young Dundeon Creatures</title>
 	</head>
 	<body>
-		{{template "content" .}}
+		{{template "content-header" .}}
+		<div class="page-wrapper">
+			<div class="page-container">
+				{{template "content" .}}
+			</div>
+		</div>
+		{{template "content-footer" .}}
 		<script type="text/javascript" src="/assets/app.js"></script>
 	</body>
 </html>

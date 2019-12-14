@@ -1,3 +1,32 @@
 {{define "content"}}
-	second template
+	{{if .logged_in}}
+		<div class="element-wrap">
+			<div class="big-label">Мой результат</div>
+		</div>
+		<div class="element-wrap tbl-row">
+			<div class="tbl-chunk tbl-self">
+				<div class="label float-left">{{.login}}</div>
+				<div class="label float-right">{{.score}}</div>
+			</div>
+		</div>
+	{{end}}
+	<div class="element-wrap">
+		<div class="big-label">Таблица лидеров</div>
+	</div>
+	{{range $i, $e := .top_logins}}
+		<div class="element-wrap tbl-row">
+			<div class="tbl-chunk {{if eq $e $.login}}tbl-self{{end}}">
+				<div class="label float-left">{{$e}}</div>
+				<div class="label float-right">{{index $.top_scores $i}}</div>
+			</div>
+		</div>
+	{{end}}
+{{end}}
+
+{{define "content-header"}}
+	{{template "header" .}}
+{{end}}
+
+{{define "content-footer"}}
+	{{template "footer" .}}
 {{end}}

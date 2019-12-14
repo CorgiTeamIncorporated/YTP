@@ -1,0 +1,243 @@
+@font-face {
+	font-family: 'Roboto-Light';
+	src: url('/assets/fonts/Roboto-Light.eot');
+	src: local('Roboto Light'), local('Roboto-Light'),
+		url('/assets/fonts/Roboto-Light.eot?#iefix') format('embedded-opentype'),
+		url('/assets/fonts/Roboto-Light.woff2') format('woff2'),
+		url('/assets/fonts/Roboto-Light.woff') format('woff'),
+		url('/assets/fonts/Roboto-Light.ttf') format('truetype'),
+		url('/assets/fonts/Roboto-Light.svg#Roboto-Light') format('svg');
+	font-weight: 300;
+	font-style: normal;
+}
+
+img {
+	display: block;
+}
+
+.header-logo {
+	height: 35px;
+	width: 35px;
+}
+
+.header-logo-wrap {
+	height: 35px;
+	width: 35px;
+}
+
+.fixed, .header-wrapper {
+	left: 0;
+	-webkit-position: fixed;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+.narrow {
+	margin: 0 auto;
+	max-width: 350px;
+}
+
+.float-right {
+	float: right;
+}
+
+[dir='rtl'] .float-right {
+	float: left;
+}
+
+.float-left {
+	float: left;
+}
+
+[dir='rtl'] .float-left {
+	float: right;
+}
+
+
+.float-right button,
+.float-right .button,
+.float-right .element-wrap {
+	float: left;
+}
+
+[dir='rtl'] .float-right button,
+[dir='rtl'] .float-right .button,
+[dir='rtl'] .float-right .element-wrap {
+	float: right;
+}
+
+
+.full-block {
+	display: block;
+	width: 100%;
+}
+
+html, body {
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	background: #9f61af;
+	border: 0;
+	color: #ffffff;
+	display: block;
+	font-family: 'Roboto-Light', Helvetica, sans-serif;
+	font-size: 14px;
+	margin: 0;
+	-moz-outline: 0;
+	outline: 0;
+	padding: 0;
+	width: 100%;
+}
+
+.element-wrap {
+	padding: 5px;
+}
+
+button, input, .button, .error, .tbl-chunk {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	border: 1px solid #ffffff;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	padding: 5px 7px;
+}
+
+button, input, .button {
+	background: none;
+	color: #ffffff;
+	font-family: 'Roboto-Light', Helvetica, sans-serif;
+	font-size: 14px;
+	height: 30px;
+	line-height: 18px;
+	text-decoration: none;
+	-webkit-transition: color .2s ease-in-out, box-shadow .2s ease-in-out;
+	-moz-transition: color .2s ease-in-out, box-shadow .2s ease-in-out;
+	-ms-transition: color .2s ease-in-out, background .2s ease-in-out;
+	-o-transition: color .2s ease-in-out, background .2s ease-in-out;
+	transition: color .2s ease-in-out, background .2s ease-in-out;
+}
+
+a {
+	color: #ffffff;
+}
+
+button, .button {
+	cursor: pointer;
+}
+
+button:hover, .button:hover {
+	color: #9f61af;
+	background: #ffffff;
+}
+
+button span, .button span {
+	left: 0;
+	position: relative;
+	top: 0;
+}
+
+input::-ms-clear,
+input::-ms-reveal {
+	display: none;
+}
+
+.label {
+	font-size: 16px;
+}
+
+.big-label {
+	font-size: 19px;
+}
+
+.header-wrapper-fixed, .page-wrapper, .footer-wrapper {
+	margin: 0 auto;
+	max-width: 1010px;
+}
+
+.header-wrapper {
+	background: #af79bd;
+	-webkit-box-shodow: 0 0 10px 0 #774a83;
+	-moz-box-shadow: 0 0 10px 0 #774a83;
+	box-shadow: 0 0 10px 0 #774a83;
+	height: 55px;
+}
+
+.header-text {
+	cursor: default;
+	line-height: 29px;
+	max-width: 300px;
+	overflow: hidden;
+	-webkit-text-overflow: ellipsis;
+	-moz-text-overflow: ellipsis;
+	-ms-text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+}
+
+.header-space {
+	height: 55px;
+}
+
+.header-container, .page-container, .footer-container {
+	overflow: hidden;
+}
+
+.header-container {
+	padding: 5px;
+	height: 45px;
+}
+
+.header-container .float-right {
+	padding-top: 2.5px;
+}
+
+.page-container {
+	padding: 5px;
+}
+
+.footer-container {
+	padding: 5px;
+}
+
+/* Error page */
+.err {
+	background: #000000;
+	font-size: 32px;
+	padding: 10px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+/* Error alerts */
+.error {
+	background: #99003b;
+}
+
+.tbl-row {
+	overflow: hidden;
+}
+
+.tbl-chunk {
+	cursor: default;
+	background: #af79bd;
+	overflow: hidden;
+	padding: 3px 6px;
+}
+
+.tbl-self {
+	background: #764583;
+}
+
+@media all and (max-width: 300px) {
+	html, body, .header-wrapper-fixed {
+		width: 300px !important;
+	}
+}
