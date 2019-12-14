@@ -55,6 +55,14 @@ const AnimatedSpriteConfig SpikesConfig = {
     2, sf::Time::Zero
 };
 
+const AnimatedSpriteConfig BlackHoleConfig = {
+    {sf::IntRect(0, 0, 100, 100), sf::IntRect(100, 0, 100, 100)},
+    {sf::IntRect(0, 0, 100, 100), sf::IntRect(100, 0, 100, 100)},
+    {sf::IntRect(0, 0, 100, 100), sf::IntRect(100, 0, 100, 100)},
+    {sf::IntRect(0, 0, 100, 100), sf::IntRect(100, 0, 100, 100)},
+    2, sf::Time::Zero
+};
+
 const AnimatedSpriteConfig FireBallConfig = {
     {sf::IntRect(0, 100, 100, 50)}, {sf::IntRect(0, 150, 100, 50)},
     {sf::IntRect(25, 200, 50, 100)}, {sf::IntRect(25, 0, 50, 100)},

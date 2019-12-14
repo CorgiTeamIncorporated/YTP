@@ -3,6 +3,7 @@
 #include "Enemies/Zombie.hpp"
 #include "Enemies/FireMan.hpp"
 #include "Enemies/Spikes.hpp"
+#include "Enemies/BlackHole.hpp"
 #include <iostream>
 #include <vector>
 #include <random>
@@ -28,8 +29,8 @@ private:
     void setPosition(GameRoom* room,  std::vector<GameRoom*>&used, int x, int y);
     void setPosition(GameRoom* room,  std::vector<GameRoom*>&used);
     void addEnemies();
-    // std::pair<unsigned short, unsigned short> findFarestRoom();
-    // void findFarestRoomHelper(std::vector<std::vector<unsigned short>> &waysGraph, unsigned short i, unsigned short j, unsigned short count);
+    std::pair<unsigned short, unsigned short> findFarestRoom();
+    void findFarestRoomHelper(std::vector<std::vector<unsigned short>> &waysGraph, unsigned short i, unsigned short j, unsigned short count);
      
 public:
     MapBuilder(unsigned short roomQuantityMin, unsigned short roomQuantityMax, Dungeon* dungeon);

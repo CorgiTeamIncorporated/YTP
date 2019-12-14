@@ -228,10 +228,25 @@ void MapBuilder::addEnemies(){
 
     unsigned short surprise;
 
+    std::pair<unsigned short, unsigned short> farestRoomCoords = findFarestRoom();
+    endRoom = rooms[connectionsGraph[farestRoomCoords.first][farestRoomCoords.second]];
+
+    BlackHole* blackHole = new BlackHole();
+    int x_black = (ROOM_LENGTH/2)*tile_size;
+    int y_black = (ROOM_HEIGHT/2)*tile_size;
+    blackHole->get_sprite().setPosition(x_black, y_black);
+    endRoom->add_enemy(blackHole);
+
+    std::cout << connectionsGraph[farestRoomCoords.first][farestRoomCoords.second] << std::endl;
+
     for(int i = 1; i < roomQuantity; i++){
+        if(rooms[i] == endRoom){
+            continue;
+        }
+
         enemy_type = mt_rand()%2;
         surprise = mt_rand()%5;
-        
+
         switch (enemy_type)
         {
         case 0:
@@ -284,7 +299,7 @@ void MapBuilder::buildMap() {
     this->addEnemies();
 }
 
-/*std::pair<unsigned short, unsigned short> MapBuilder::findFarestRoom(){
+std::pair<unsigned short, unsigned short> MapBuilder::findFarestRoom(){
     unsigned short x = 0;
     unsigned short y = 0;
     unsigned short max = 0;
@@ -323,7 +338,6 @@ void MapBuilder::findFarestRoomHelper(std::vector<std::vector<unsigned short>> &
         findFarestRoomHelper(waysGraph, i, j-1, count++);
     }
 }
-*/
 
 GameRoom* MapBuilder::getStartRoom() {
     return startRoom;
